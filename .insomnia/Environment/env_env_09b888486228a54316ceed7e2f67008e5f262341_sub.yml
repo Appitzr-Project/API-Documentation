@@ -1,15 +1,13 @@
 _id: env_env_09b888486228a54316ceed7e2f67008e5f262341_sub
 type: Environment
 parentId: env_09b888486228a54316ceed7e2f67008e5f262341
-modified: 1615715939260
+modified: 1615717250178
 created: 1615710007217
 name: Development
 data:
   scheme: http
-  base_path: /dev/
+  base_path: /dev
   host: 127.0.0.1:3000
-  httpUsername: username
-  httpPassword: password
   bearerToken: bearerToken
 dataPropertyOrder:
   "&":
