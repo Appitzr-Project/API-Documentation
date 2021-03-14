@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1615717522504
+modified: 1615720304730
 created: 1615646672691
 fileName: appetzr
 contents: |-
@@ -41,6 +41,27 @@ contents: |-
                     $ref: "#/components/schemas/venueProfile"
           "401":
             $ref: '#/components/responses/UnauthorizedError'
+      post:
+        security:
+          - bearerAuth: []
+        tags:
+          - venueprofile
+        summary: Update Venue Profile
+        description: ""
+        requestBody:
+          $ref: '#/components/requestBodies/Venue'
+        responses:
+          "200":
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/venueProfile"
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+        
   components:
     securitySchemes:
       bearerAuth:
@@ -53,10 +74,21 @@ contents: |-
     schemas:
       venueProfile:
         type: object
+        required:
+          - venueName
+          - venueEmail
+          - bankBSB
+          - bankName
+          - bankAccountNo
+          - phoneNumber
+          - address
+          - postalCode
+          - long
+          - lat
         properties:
           id:
             type: string
-            example: 5522afec-a71f-4817-b84b-e5ab2e668255
+            readOnly: true
           venueName:
             type: string
             example: Opera House
@@ -87,6 +119,13 @@ contents: |-
           lat:
             type: number
             example: 150.6517896
+    requestBodies:
+      Venue:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/venueProfile"
+        description: Update Venue Profile Detail
   security:
     - bearerAuth: []
 contentType: yaml
