@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1615714230100
+modified: 1615715282348
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -14,19 +14,32 @@ contents: >-
     termsOfService: http://appetizr.co/tos/
     contact:
       email: dev@appetizr.co
+  servers:
+    - url: https://api.appetizr.co
+      description: Production Server API
+    - url: https://api.dev.appetizr.co
+      description: Development Server API
   tags:
     - name: venueprofile
       description: Venue Profile API 
   paths:
     /venueprofile:
-      post:
+      get:
+        security:
+          - bearerAuth: []
         tags:
           - venueprofile
         summary: Detail Venue Profile
         description: ""
         responses:
           "200":
-            description: OK
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/venueProfile"
       put:
         tags:
           - venueprofile
@@ -458,15 +471,14 @@ contents: >-
             description: Invalid username supplied
           "404":
             description: User not found
-  externalDocs:
-    description: Find out more about Swagger
-    url: http://swagger.io
-  servers:
-    - url: https://api.appetizr.co
-      description: Production Server API
-    - url: https://api.dev.appetizr.co
-      description: Development Server API
+  security:
+    - bearerAuth: []
   components:
+    securitySchemes:
+      bearerAuth:
+        type: http
+        scheme: bearer
+        bearerFormat: JWT
     requestBodies:
       UserArray:
         content:
@@ -488,6 +500,42 @@ contents: >-
         description: Pet object that needs to be added to the store
         required: true
     schemas:
+      venueProfile:
+        type: object
+        properties:
+          id:
+            type: string
+            example: 5522afec-a71f-4817-b84b-e5ab2e668255
+          venueName:
+            type: string
+            example: Opera House
+          venueEmail:
+            type: string
+            example: operahouse@example.com
+          bankBSB:
+            type: number
+            example: "012345"
+          bankName:
+            type: string
+            example: Opera House
+          bankAccountNo:
+            type: string
+            example: "0123456789"
+          phoneNumber:
+            type: string
+            example: "(+61) 1234 5678"
+          address:
+            type: string
+            example: "10 Example Address, Sydney, Australia, 1234"
+          postalCode:
+            type: number
+            example: 12345
+          long:
+            type: number
+            example: -33.8473567
+          lat:
+            type: number
+            example: 150.6517896
       Order:
         type: object
         properties:
