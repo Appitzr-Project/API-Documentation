@@ -1,11 +1,11 @@
 _id: env_ff2d0acd37dd4c5b845ee5762303e891
 type: Environment
 parentId: env_09b888486228a54316ceed7e2f67008e5f262341
-modified: 1615709388921
+modified: 1615710072809
 created: 1615709334489
 name: Development
 data:
-  url: https://127.0.0.1:3000/dev
+  url: http://127.0.0.1:3000/dev
   token: "1234"
 dataPropertyOrder:
   "&":
