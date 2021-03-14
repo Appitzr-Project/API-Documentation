@@ -15,7 +15,7 @@ jobs:
     - name: Generate Swagger Yaml
       run: inso export spec ${{ secrets.SPEC_INFO }} --ci
     - name: Generate Swagger JSON From Yaml
-      run: swagger-cli bundel -o swagger.json -f json output.yml
+      run: swagger-cli bundle --outfile swagger.json output.yaml
     - name: Push Generator to Branch
       run: |
         git config --global user.name "Github Actions"
