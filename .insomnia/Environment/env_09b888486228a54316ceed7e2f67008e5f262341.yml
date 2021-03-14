@@ -1,11 +1,11 @@
 _id: env_09b888486228a54316ceed7e2f67008e5f262341
 type: Environment
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1615715693671
+modified: 1615715925858
 created: 1615646672833
 name: Base Environment
 data:
-  base_url: "{{scheme}}://{{host}}/{{base_path}}"
+  base_url: "{{scheme}}://{{host}}{{base_path}}"
 dataPropertyOrder:
   "&":
     - base_url
