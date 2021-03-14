@@ -1,0 +1,21 @@
+_id: req_wrk_a14d3233ec9e4a5a8512f084572b8c01a39af6bc
+type: Request
+parentId: fld_wrk_a14d3233ec9e4a5a8512f084572b8c01764e92fd
+modified: 1615714595286
+created: 1615714595286
+url: "{{ base_url }}/venueprofile"
+name: Detail Venue Profile
+description: ""
+method: POST
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1615714595286
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
