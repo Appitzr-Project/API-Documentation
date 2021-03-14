@@ -1,0 +1,20 @@
+_id: env_e6c307587e8740248d47e9f24c6bcb2c
+type: Environment
+parentId: env_09b888486228a54316ceed7e2f67008e5f262341
+modified: 1615715842012
+created: 1615715788604
+name: Production
+data:
+  scheme: https
+  base_path: /
+  host: api.appetizr.co
+  bearerToken: bearerToken
+dataPropertyOrder:
+  "&":
+    - scheme
+    - base_path
+    - host
+    - bearerToken
+color: null
+isPrivate: false
+metaSortKey: 1615710007317

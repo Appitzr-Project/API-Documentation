@@ -1,0 +1,20 @@
+_id: env_acd9fe14b0d6469398b871ba01229b10
+type: Environment
+parentId: env_09b888486228a54316ceed7e2f67008e5f262341
+modified: 1615715831014
+created: 1615715787514
+name: Staging
+data:
+  scheme: https
+  base_path: /
+  host: api.dev.appetizr.co
+  bearerToken: bearerToken
+dataPropertyOrder:
+  "&":
+    - scheme
+    - base_path
+    - host
+    - bearerToken
+color: null
+isPrivate: false
+metaSortKey: 1615710007267
