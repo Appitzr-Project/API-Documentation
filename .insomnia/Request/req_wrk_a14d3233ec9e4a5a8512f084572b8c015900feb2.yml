@@ -12,6 +12,8 @@ parameters: []
 headers: []
 authentication:
   type: bearer
+  username: "{{ httpUsername }}"
+  password: "{{ httpPassword }}"
   token: "{{bearerToken}}"
   prefix: ""
 metaSortKey: -1615715339051

@@ -8,6 +8,8 @@ data:
   scheme: http
   base_path: /dev/
   host: 127.0.0.1:3000
+  httpUsername: username
+  httpPassword: password
   bearerToken: bearerToken
 dataPropertyOrder:
   "&":
