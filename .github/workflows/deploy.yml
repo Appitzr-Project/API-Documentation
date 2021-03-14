@@ -13,7 +13,7 @@ jobs:
     - run: yarn global add insomnia-inso
     - run: yarn global add @apidevtools/swagger-cli
     - name: Generate Swagger Yaml
-      run: inso export spec ${{ secrets.SPEC_INFO }}
+      run: inso export spec ${{ secrets.SPEC_INFO }} --ci
     - name: Generate Swagger JSON From Yaml
       run: swagger-cli bundel -o swagger.json -f json output.yml
     - name: Push Generator to Branch
