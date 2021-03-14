@@ -56,6 +56,39 @@
             "$ref": "#/components/responses/UnauthorizedError"
           }
         }
+      },
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "venueprofile"
+        ],
+        "summary": "Update Venue Profile",
+        "description": "",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Venue"
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/venueProfile"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
       }
     }
   },
@@ -75,10 +108,22 @@
     "schemas": {
       "venueProfile": {
         "type": "object",
+        "required": [
+          "venueName",
+          "venueEmail",
+          "bankBSB",
+          "bankName",
+          "bankAccountNo",
+          "phoneNumber",
+          "address",
+          "postalCode",
+          "long",
+          "lat"
+        ],
         "properties": {
           "id": {
             "type": "string",
-            "example": "5522afec-a71f-4817-b84b-e5ab2e668255"
+            "readOnly": true
           },
           "venueName": {
             "type": "string",
@@ -121,6 +166,18 @@
             "example": 150.6517896
           }
         }
+      }
+    },
+    "requestBodies": {
+      "Venue": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/venueProfile"
+            }
+          }
+        },
+        "description": "Update Venue Profile Detail"
       }
     }
   },
