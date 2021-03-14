@@ -1,0 +1,132 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Appetizr API Documentation Swagger.",
+    "version": "1.0.0",
+    "title": "Appetizr API Documentation",
+    "termsOfService": "http://appetizr.co/tos/",
+    "contact": {
+      "email": "dev@appetizr.co"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.appetizr.co",
+      "description": "Production Server API"
+    },
+    {
+      "url": "https://api.dev.appetizr.co",
+      "description": "Development Server API"
+    }
+  ],
+  "tags": [
+    {
+      "name": "venueprofile",
+      "description": "Venue Profile API"
+    }
+  ],
+  "paths": {
+    "/venueprofile": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "venueprofile"
+        ],
+        "summary": "Detail Venue Profile",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/venueProfile"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Access token is missing or invalid"
+      }
+    },
+    "schemas": {
+      "venueProfile": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "5522afec-a71f-4817-b84b-e5ab2e668255"
+          },
+          "venueName": {
+            "type": "string",
+            "example": "Opera House"
+          },
+          "venueEmail": {
+            "type": "string",
+            "example": "operahouse@example.com"
+          },
+          "bankBSB": {
+            "type": "number",
+            "example": "012345"
+          },
+          "bankName": {
+            "type": "string",
+            "example": "Opera House"
+          },
+          "bankAccountNo": {
+            "type": "string",
+            "example": "0123456789"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "example": "(+61) 1234 5678"
+          },
+          "address": {
+            "type": "string",
+            "example": "10 Example Address, Sydney, Australia, 1234"
+          },
+          "postalCode": {
+            "type": "number",
+            "example": 12345
+          },
+          "long": {
+            "type": "number",
+            "example": -33.8473567
+          },
+          "lat": {
+            "type": "number",
+            "example": 150.6517896
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}
