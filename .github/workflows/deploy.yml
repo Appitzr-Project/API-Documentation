@@ -16,6 +16,8 @@ jobs:
       run: inso export spec ${{ secrets.SPEC_INFO }} --output output.yaml --ci
     - name: Generate Swagger JSON From Yaml
       run: swagger-cli bundle --outfile swagger.json output.yaml
+    - name: Delete Output Yaml
+      run: rm -rf output.yaml
     - name: Push Generator to Branch
       run: |
         git config --global user.name "Github Actions"
