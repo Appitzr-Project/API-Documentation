@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1615788172611
+modified: 1615812342681
 created: 1615646672691
 fileName: appetzr
 contents: |-
@@ -34,23 +34,26 @@ contents: |-
         description: ""
         responses:
           "200":
-            description: OK
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    code:
-                      type: number
-                      example: 200
-                    message:
-                      type: string
-                      example: success
-                    data:
-                      $ref: "#/components/schemas/venueProfile"
+            $ref: '#/components/responseBodies/Venue'
           "401":
             $ref: '#/components/responses/UnauthorizedError'
       post:
+        security:
+          - bearerAuth: []
+        tags:
+          - venueprofile
+        summary: Create New Venue Profile
+        description: ""
+        requestBody:
+          $ref: '#/components/requestBodies/Venue'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Venue'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
+      put:
         security:
           - bearerAuth: []
         tags:
@@ -61,20 +64,7 @@ contents: |-
           $ref: '#/components/requestBodies/Venue'
         responses:
           "200":
-            description: successful operation
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    code:
-                      type: number
-                      example: 200
-                    message:
-                      type: string
-                      example: success
-                    data:
-                      $ref: "#/components/schemas/venueProfile"
+            $ref: '#/components/responseBodies/Venue'
           "401":
             $ref: '#/components/responses/UnauthorizedError'
           "422":
@@ -107,8 +97,30 @@ contents: |-
     responses:
       UnauthorizedError:
         description: Authorization information is missing or invalid.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 401
+                message:
+                  type: string
+                  example: error
       UnprocessableEntity:
         description: Unprocessable Entity
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 422
+                message:
+                  type: string
+                  example: error
     schemas:
       venueProfile:
         type: object
@@ -125,6 +137,9 @@ contents: |-
           - lat
         properties:
           id:
+            type: string
+            readOnly: true
+          cognitoId:
             type: string
             readOnly: true
           venueName:
@@ -157,10 +172,19 @@ contents: |-
           lat:
             type: number
             example: 150.6517896
+          createdAt:
+            type: string
+            example: 2021-03-15T12:41:05.848Z
+          updatedAt:
+            type: string
+            example: 2021-03-15T12:41:05.848Z
       memberProfile:
         type: object
         properties:
           id:
+            type: string
+            readOnly: true
+          cognitoId:
             type: string
             readOnly: true
           name:
@@ -181,15 +205,36 @@ contents: |-
           cardCVV:
             type: number
             example: 123
-          
-            
+          createdAt:
+            type: string
+            example: 2021-03-15T12:41:05.848Z
+          updatedAt:
+            type: string
+            example: 2021-03-15T12:41:05.848Z
     requestBodies:
       Venue:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/venueProfile"
-        description: Update Venue Profile Detail
+        description: Venue Profile Parameter
+    responseBodies:
+      Venue:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  $ref: "#/components/schemas/venueProfile"
+    
   security:
     - bearerAuth: []
 contentType: yaml
