@@ -23,6 +23,10 @@
     {
       "name": "venueprofile",
       "description": "Venue Profile API"
+    },
+    {
+      "name": "memberprofile",
+      "description": "Member Profile API"
     }
   ],
   "paths": {
@@ -80,6 +84,38 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/venueProfile"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/memberprofile": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "memberprofile"
+        ],
+        "summary": "Detail Member Profile",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/memberProfile"
                   }
                 }
               }
@@ -164,6 +200,39 @@
           "lat": {
             "type": "number",
             "example": 150.6517896
+          }
+        }
+      },
+      "memberProfile": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "example": "john doe"
+          },
+          "email": {
+            "type": "string",
+            "example": "johndoe@example.com"
+          },
+          "mobileNumber": {
+            "type": "string",
+            "example": "(+61) 1234 5678"
+          },
+          "cardNumber": {
+            "type": "number",
+            "example": 123456789012345
+          },
+          "cardExpiry": {
+            "type": "string",
+            "example": "12/25"
+          },
+          "cardCVV": {
+            "type": "number",
+            "example": 123
           }
         }
       }
