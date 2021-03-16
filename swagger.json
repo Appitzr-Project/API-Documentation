@@ -44,17 +44,7 @@
         "description": "",
         "responses": {
           "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/venueProfile"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responseBodies/Venue"
           },
           "401": {
             "$ref": "#/components/responses/UnauthorizedError"
@@ -70,6 +60,32 @@
         "tags": [
           "venueprofile"
         ],
+        "summary": "Create New Venue Profile",
+        "description": "",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Venue"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responseBodies/Venue"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "venueprofile"
+        ],
         "summary": "Update Venue Profile",
         "description": "",
         "requestBody": {
@@ -77,20 +93,13 @@
         },
         "responses": {
           "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/venueProfile"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responseBodies/Venue"
           },
           "401": {
             "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
           }
         }
       }
@@ -138,7 +147,44 @@
     },
     "responses": {
       "UnauthorizedError": {
-        "description": "Access token is missing or invalid"
+        "description": "Authorization information is missing or invalid.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "UnprocessableEntity": {
+        "description": "Unprocessable Entity",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number",
+                  "example": 422
+                },
+                "message": {
+                  "type": "string",
+                  "example": "error"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "schemas": {
@@ -158,6 +204,10 @@
         ],
         "properties": {
           "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "cognitoId": {
             "type": "string",
             "readOnly": true
           },
@@ -200,6 +250,14 @@
           "lat": {
             "type": "number",
             "example": 150.6517896
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2021-03-15T12:41:05.848Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2021-03-15T12:41:05.848Z"
           }
         }
       },
@@ -207,6 +265,10 @@
         "type": "object",
         "properties": {
           "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "cognitoId": {
             "type": "string",
             "readOnly": true
           },
@@ -233,6 +295,14 @@
           "cardCVV": {
             "type": "number",
             "example": 123
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2021-03-15T12:41:05.848Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2021-03-15T12:41:05.848Z"
           }
         }
       }
@@ -246,7 +316,32 @@
             }
           }
         },
-        "description": "Update Venue Profile Detail"
+        "description": "Venue Profile Parameter"
+      }
+    },
+    "responseBodies": {
+      "Venue": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "$ref": "#/components/schemas/venueProfile"
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
