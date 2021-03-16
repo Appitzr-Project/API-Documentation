@@ -2,6 +2,8 @@ name: Build Swagger UI
 on:
   push:
     branches: ['master']
+  paths-ignore:
+      - '**/swagger.json'
 jobs:
   build:
     runs-on: ubuntu-latest
