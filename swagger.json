@@ -40,7 +40,7 @@
         "tags": [
           "venueprofile"
         ],
-        "summary": "Detail Venue Profile",
+        "summary": "Detail of Venue Profile",
         "description": "",
         "responses": {
           "200": {
@@ -60,7 +60,7 @@
         "tags": [
           "venueprofile"
         ],
-        "summary": "Create New Venue Profile",
+        "summary": "Create New Venue Profile Detail",
         "description": "",
         "requestBody": {
           "$ref": "#/components/requestBodies/Venue"
@@ -86,7 +86,7 @@
         "tags": [
           "venueprofile"
         ],
-        "summary": "Update Venue Profile",
+        "summary": "Update Venue Profile Detail",
         "description": "",
         "requestBody": {
           "$ref": "#/components/requestBodies/Venue"
@@ -192,7 +192,6 @@
         "type": "object",
         "required": [
           "venueName",
-          "venueEmail",
           "bankBSB",
           "bankName",
           "bankAccountNo",
@@ -200,16 +199,14 @@
           "address",
           "postalCode",
           "long",
-          "lat"
+          "lat",
+          "cultureCategory"
         ],
         "properties": {
           "id": {
-            "type": "string",
-            "readOnly": true
-          },
-          "cognitoId": {
-            "type": "string",
-            "readOnly": true
+            "type": "uuid",
+            "readOnly": true,
+            "example": "9138017c-6a3b-42b8-adda-a1f1b94377e5"
           },
           "venueName": {
             "type": "string",
@@ -217,6 +214,7 @@
           },
           "venueEmail": {
             "type": "string",
+            "readOnly": true,
             "example": "operahouse@example.com"
           },
           "bankBSB": {
@@ -243,21 +241,38 @@
             "type": "number",
             "example": 12345
           },
-          "long": {
+          "mapLong": {
             "type": "number",
             "example": -33.8473567
           },
-          "lat": {
+          "mapLat": {
             "type": "number",
             "example": 150.6517896
           },
-          "createdAt": {
+          "cultureCategory": {
             "type": "string",
-            "example": "2021-03-15T12:41:05.848Z"
+            "example": "japanese",
+            "enum": [
+              "japanese",
+              "chinese",
+              "european",
+              "americas"
+            ]
+          },
+          "profilePicture": {
+            "type": "string",
+            "readOnly": true,
+            "default": "https://assets.appetizr.co/2021/03/373cf69e-23f2-430a-acc3-7234800edaf0.png"
+          },
+          "createdAt": {
+            "type": "date-time",
+            "readOnly": true,
+            "example": "2021-03-16T08:18:26.477Z"
           },
           "updatedAt": {
-            "type": "string",
-            "example": "2021-03-15T12:41:05.848Z"
+            "type": "date-time",
+            "readOnly": true,
+            "example": "2021-03-16T08:18:26.477Z"
           }
         }
       },
@@ -266,11 +281,8 @@
         "properties": {
           "id": {
             "type": "string",
-            "readOnly": true
-          },
-          "cognitoId": {
-            "type": "string",
-            "readOnly": true
+            "readOnly": true,
+            "example": "c8402b37-0f24-43db-be89-ae7ac7983e16"
           },
           "name": {
             "type": "string",
