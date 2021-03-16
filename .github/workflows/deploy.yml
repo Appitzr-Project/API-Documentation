@@ -20,8 +20,8 @@ jobs:
       run: rm -rf output.yaml
     - name: Push Generator to Branch
       run: |
-        git config --global user.name "Github Actions"
-        git config --global user.email "actions@users.noreply.github.com"
+        git config --global user.name "Yadi Push Branch Actions"
+        git config --global user.email "juniyadi94@gmail.com"
         git add swagger.json
         git commit -m "Update Swagger JSON"
         git push
