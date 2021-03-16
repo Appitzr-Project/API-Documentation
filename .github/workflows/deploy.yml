@@ -26,7 +26,7 @@ jobs:
       run: |
         git config --global user.name "PojokanProject Push Branch Actions"
         git config --global user.email "pojokanprojects@gmail.com"
-        DIFF=$(git diff HEAD~1 swagger.json)
+        DIFF=$( git diff origin/master -- swagger.json )
         # Only Push if Diffrent
         if [ $DIFF ]; then
           echo "Push New Change Swagger.json"
