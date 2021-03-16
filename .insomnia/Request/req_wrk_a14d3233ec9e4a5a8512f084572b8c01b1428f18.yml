@@ -1,0 +1,24 @@
+_id: req_wrk_a14d3233ec9e4a5a8512f084572b8c01b1428f18
+type: Request
+parentId: fld_wrk_a14d3233ec9e4a5a8512f084572b8c01d4a457df
+modified: 1615787260496
+created: 1615787260496
+url: "{{ base_url }}/memberprofile"
+name: Detail Member Profile
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{{bearerToken}}"
+  prefix: ""
+metaSortKey: -1615787260496
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
