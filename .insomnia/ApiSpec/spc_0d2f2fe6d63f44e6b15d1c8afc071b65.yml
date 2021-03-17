@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1615975605747
+modified: 1615985631419
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -242,6 +242,67 @@ contents: >-
             type: boolean
             example: false
             description: Blokir Venue
+          createdAt:
+            type: date-time
+            readOnly: true
+            example: 2021-03-16T08:18:26.477Z
+          updatedAt:
+            type: date-time
+            readOnly: true
+            example: 2021-03-16T08:18:26.477Z
+      products:
+        type: object
+        required:
+          - name
+          - description
+          - price
+          - category
+          - images
+          - proteinType
+          - isActive
+        properties:
+          id:
+            type: uuid
+            readOnly: true
+            example: 5928876c-7bf6-43e9-95ca-bf569c8d2af5
+          venueId:
+            type: uuid
+            readOnly: true
+            example: 9138017c-6a3b-42b8-adda-a1f1b94377e5
+            description: Venue ID From Table Schema venueProfile
+          name:
+            type: string
+            example: Cheese Spaghetti
+          description:
+            type: string
+            example: Cheese spaghetti with spicy tomato sauce with generous chicken and meat
+          price:
+            type: number
+            example: 10
+            description: write only number of money
+          category:
+            type: string
+            example: spaghetti
+            enum:
+              - dessert
+              - spaghetti
+              - drink
+          images:
+            type: array
+            items:
+              type: string
+            eample:
+              - https://assets.appetizr.co/2021/03/2432ad3e-1d48-4a94-8521-966a14b42cc5.png
+              - https://assets.appetizr.co/2021/03/2e4b2ff3-6846-428f-8ef3-8ff7df22fc8f.png
+          proteinType:
+            type: string
+            enum:
+              - vegan
+              - meat
+              - vegetables
+          isActive:
+            type: boolean
+            example: true
           createdAt:
             type: date-time
             readOnly: true
