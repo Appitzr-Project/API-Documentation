@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1615985631419
+modified: 1615987798055
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -311,6 +311,105 @@ contents: >-
             type: date-time
             readOnly: true
             example: 2021-03-16T08:18:26.477Z
+      orders:
+        type: object
+        required:
+          - productIds
+          - totalPrice
+          - instruction
+        properties:
+          id:
+            type: uuid
+            readOnly: true
+            example: b6fccce5-69fc-43b0-93f1-2187c92bacc5
+          userId:
+            type: uuid
+            readOnly: true
+            example: c8402b37-0f24-43db-be89-ae7ac7983e16
+            description: User ID From Table Schema memberProfile
+          userEmail:
+            type: string
+            readOnly: true
+            example: johndoe@example.com
+            description: User Email From Table Schema memberProfile
+          venueId:
+            type: uuid
+            readOnly: true
+            example: 9138017c-6a3b-42b8-adda-a1f1b94377e5
+            description: Venue ID From Table Schema venueProfile
+          venueEmail:
+            type: string
+            readOnly: true
+            example: operahouse@example.com
+            description: Venue Email From Table Schema venueProfile
+          productIds:
+            type: array
+            items:
+              $ref: "#/components/schemas/products"
+          totalPrice:
+            type: number
+            example: 100
+            description: Total Price Order (Without Discount)
+          paymentDetail:
+            type: string
+            readOnly: true
+            example: A1B2C3D4E5F6G7H8
+          transactionDate:
+            type: date-time
+            readOnly: true
+            example: 2021-03-17T13:22:48.349Z
+          paymentStatus:
+            type: string
+            readOnly: true
+            example: payment_verified
+            enum:
+              - waiting_payment
+              - payment_failed
+              - payment_refund
+              - payment_verified
+          instruction:
+            type: string
+            example: please add more sauce
+          orderStatus:
+            type: string
+            readOnly: true
+            example: in_progress
+            enum:
+              - cancel
+              - in_progress
+              - done
+          discountCode:
+            type: string
+            example: 20OFF
+          discountPrice:
+            type: number
+            readOnly: true
+            example: 10
+            description: Total Discount Price
+          rating:
+            type: number
+            readOnly: true
+            example: 5
+            enum:
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+          reviews:
+            type: string
+            example: the food is very good, the place to eat is also very comfortable
+          userSessionToken:
+            type: string
+            readOnly: true
+          createdAt:
+            type: date-time
+            readOnly: true
+            example: 2021-03-17T13:22:30.192Z
+          updatedAt:
+            type: date-time
+            readOnly: true
+            example: 2021-03-17T13:22:48.349Z
     requestBodies:
       Venue:
         content:
