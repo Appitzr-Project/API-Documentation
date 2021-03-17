@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1615910486813
+modified: 1615988453892
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -80,13 +80,7 @@ contents: >-
         description: ""
         responses:
           "200":
-            description: successful operation
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/memberProfile"
+            $ref: '#/components/responseBodies/Member'
           "401":
             $ref: '#/components/responses/UnauthorizedError'
   components:
@@ -183,7 +177,7 @@ contents: >-
           profilePicture:
             type: string
             readOnly: true
-            default: 'https://assets.appetizr.co/2021/03/373cf69e-23f2-430a-acc3-7234800edaf0.png'
+            example: https://assets.appetizr.co/2021/03/373cf69e-23f2-430a-acc3-7234800edaf0.png
           createdAt:
             type: date-time
             readOnly: true
@@ -194,9 +188,12 @@ contents: >-
             example: 2021-03-16T08:18:26.477Z
       memberProfile:
         type: object
+        required:
+          - name
+          - mobileNumber
         properties:
           id:
-            type: string
+            type: uuid
             readOnly: true
             example: c8402b37-0f24-43db-be89-ae7ac7983e16
           name:
@@ -204,25 +201,273 @@ contents: >-
             example: john doe
           email:
             type: string
+            readOnly: true
             example: johndoe@example.com
           mobileNumber:
             type: string
             example: "(+61) 1234 5678"
-          cardNumber:
-            type: number
-            example: 123456789012345
-          cardExpiry:
+          profilePicture:
             type: string
-            example: 12/25
-          cardCVV:
-            type: number
-            example: 123
+            readOnly: true
+            example: https://assets.appetizr.co/2021/03/373cf69e-23f2-430a-acc3-7234800edaf0.png
           createdAt:
-            type: string
-            example: 2021-03-15T12:41:05.848Z
+            type: date-time
+            readOnly: true
+            example: 2021-03-16T08:18:26.477Z
           updatedAt:
+            type: date-time
+            readOnly: true
+            example: 2021-03-16T08:18:26.477Z
+      userFavorites:
+        type: object
+        required:
+          - name
+          - mobileNumber
+        properties:
+          id:
+            type: uuid
+            readOnly: true
+            example: 5928876c-7bf6-43e9-95ca-bf569c8d2af5
+          userId:
+            type: uuid
+            readOnly: true
+            example: c8402b37-0f24-43db-be89-ae7ac7983e16
+            description: User ID From Table Schema memberProfile
+          venueId:
+            type: uuid
+            readOnly: true
+            example: 9138017c-6a3b-42b8-adda-a1f1b94377e5
+            description: Venue ID From Table Schema venueProfile
+          isBlocked:
+            type: boolean
+            example: false
+            description: Blokir Venue
+          createdAt:
+            type: date-time
+            readOnly: true
+            example: 2021-03-16T08:18:26.477Z
+          updatedAt:
+            type: date-time
+            readOnly: true
+            example: 2021-03-16T08:18:26.477Z
+      products:
+        type: object
+        required:
+          - name
+          - description
+          - price
+          - category
+          - images
+          - proteinType
+          - isActive
+        properties:
+          id:
+            type: uuid
+            readOnly: true
+            example: 5928876c-7bf6-43e9-95ca-bf569c8d2af5
+          venueId:
+            type: uuid
+            readOnly: true
+            example: 9138017c-6a3b-42b8-adda-a1f1b94377e5
+            description: Venue ID From Table Schema venueProfile
+          name:
             type: string
-            example: 2021-03-15T12:41:05.848Z
+            example: Cheese Spaghetti
+          description:
+            type: string
+            example: Cheese spaghetti with spicy tomato sauce with generous chicken and meat
+          price:
+            type: number
+            example: 10
+            description: write only number of money
+          category:
+            type: string
+            example: spaghetti
+            enum:
+              - dessert
+              - spaghetti
+              - drink
+          images:
+            type: array
+            items:
+              type: string
+            eample:
+              - https://assets.appetizr.co/2021/03/2432ad3e-1d48-4a94-8521-966a14b42cc5.png
+              - https://assets.appetizr.co/2021/03/2e4b2ff3-6846-428f-8ef3-8ff7df22fc8f.png
+          proteinType:
+            type: string
+            enum:
+              - vegan
+              - meat
+              - vegetables
+          isActive:
+            type: boolean
+            example: true
+          createdAt:
+            type: date-time
+            readOnly: true
+            example: 2021-03-16T08:18:26.477Z
+          updatedAt:
+            type: date-time
+            readOnly: true
+            example: 2021-03-16T08:18:26.477Z
+      orders:
+        type: object
+        required:
+          - venueId
+          - productIds
+          - instruction
+          - discountCode
+        properties:
+          id:
+            type: uuid
+            readOnly: true
+            example: b6fccce5-69fc-43b0-93f1-2187c92bacc5
+          userId:
+            type: uuid
+            readOnly: true
+            example: c8402b37-0f24-43db-be89-ae7ac7983e16
+            description: User ID From Table Schema memberProfile
+          userEmail:
+            type: string
+            readOnly: true
+            example: johndoe@example.com
+            description: User Email From Table Schema memberProfile
+          venueId:
+            type: uuid
+            example: 9138017c-6a3b-42b8-adda-a1f1b94377e5
+            description: Venue ID From Table Schema venueProfile
+          venueEmail:
+            type: string
+            readOnly: true
+            example: operahouse@example.com
+            description: Venue Email From Table Schema venueProfile
+          productIds:
+            type: array
+            items:
+              $ref: "#/components/schemas/products"
+          totalPrice:
+            type: number
+            readOnly: true
+            example: 100
+            description: Total Price Order (Without Discount)
+          paymentDetail:
+            type: string
+            readOnly: true
+            example: A1B2C3D4E5F6G7H8
+          transactionDate:
+            type: date-time
+            readOnly: true
+            example: 2021-03-17T13:22:48.349Z
+          paymentStatus:
+            type: string
+            readOnly: true
+            example: payment_verified
+            enum:
+              - waiting_payment
+              - payment_failed
+              - payment_refund
+              - payment_verified
+          instruction:
+            type: string
+            example: please add more sauce
+          orderStatus:
+            type: string
+            readOnly: true
+            example: in_progress
+            enum:
+              - cancel
+              - in_progress
+              - done
+          discountCode:
+            type: string
+            example: 20OFF
+          discountPrice:
+            type: number
+            readOnly: true
+            example: 10
+            description: Total Discount Price
+          rating:
+            type: number
+            readOnly: true
+            example: 5
+            enum:
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+          reviews:
+            type: string
+            readOnly: true
+            example: the food is very good, the place to eat is also very comfortable
+          userSessionToken:
+            type: string
+            readOnly: true
+          createdAt:
+            type: date-time
+            readOnly: true
+            example: 2021-03-17T13:22:30.192Z
+          updatedAt:
+            type: date-time
+            readOnly: true
+            example: 2021-03-17T13:22:48.349Z
+      discounts:
+        type: object
+        required:
+          - voucherCode
+          - percentage
+          - minOrder
+          - maxDiscAmount
+          - isActive
+          - startDate
+          - endDate
+        properties:
+          id:
+            type: uuid
+            readOnly: true
+            example: c1bf2841-9a57-4f51-82c7-27a3d63f3558
+          venueId:
+            type: uuid
+            readOnly: true
+            example: 9138017c-6a3b-42b8-adda-a1f1b94377e5
+            description: Venue ID From Table Schema venueProfile
+          voucherCode:
+            type: string
+            example: 20OFF
+          percentage:
+            type: number
+            minimum: 1
+            maximum: 100
+            example: 10
+          minOrder:
+            type: number
+            example: 25
+            description: Minimum Order in $AUD
+          maxDiscAmount:
+            type: number
+            example: 10
+            description: Maximum Discount Price in $AUD
+          isActive:
+            type: boolean
+            example: true
+            description: Set Voucher Code Active or Not
+          startDate:
+            type: date-time
+            example: 2021-03-16T07:00:00.000Z
+            description: Set Voucher Code Starting Date
+          endDate:
+            type: date-time
+            example: 2021-03-17T07:00:00.000Z
+            description: Set Voucher Code End Date
+          createdAt:
+            type: date-time
+            readOnly: true
+            example: 2021-03-16T08:18:26.477Z
+          updatedAt:
+            type: date-time
+            readOnly: true
+            example: 2021-03-16T08:18:26.477Z
     requestBodies:
       Venue:
         content:
@@ -246,6 +491,21 @@ contents: >-
                   example: success
                 data:
                   $ref: "#/components/schemas/venueProfile"
+      Member:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  $ref: "#/components/schemas/memberProfile"
 
     
   security:
