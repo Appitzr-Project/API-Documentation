@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1615987798055
+modified: 1615988453892
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -314,9 +314,10 @@ contents: >-
       orders:
         type: object
         required:
+          - venueId
           - productIds
-          - totalPrice
           - instruction
+          - discountCode
         properties:
           id:
             type: uuid
@@ -334,7 +335,6 @@ contents: >-
             description: User Email From Table Schema memberProfile
           venueId:
             type: uuid
-            readOnly: true
             example: 9138017c-6a3b-42b8-adda-a1f1b94377e5
             description: Venue ID From Table Schema venueProfile
           venueEmail:
@@ -348,6 +348,7 @@ contents: >-
               $ref: "#/components/schemas/products"
           totalPrice:
             type: number
+            readOnly: true
             example: 100
             description: Total Price Order (Without Discount)
           paymentDetail:
@@ -398,6 +399,7 @@ contents: >-
               - 5
           reviews:
             type: string
+            readOnly: true
             example: the food is very good, the place to eat is also very comfortable
           userSessionToken:
             type: string
@@ -410,6 +412,62 @@ contents: >-
             type: date-time
             readOnly: true
             example: 2021-03-17T13:22:48.349Z
+      discounts:
+        type: object
+        required:
+          - voucherCode
+          - percentage
+          - minOrder
+          - maxDiscAmount
+          - isActive
+          - startDate
+          - endDate
+        properties:
+          id:
+            type: uuid
+            readOnly: true
+            example: c1bf2841-9a57-4f51-82c7-27a3d63f3558
+          venueId:
+            type: uuid
+            readOnly: true
+            example: 9138017c-6a3b-42b8-adda-a1f1b94377e5
+            description: Venue ID From Table Schema venueProfile
+          voucherCode:
+            type: string
+            example: 20OFF
+          percentage:
+            type: number
+            minimum: 1
+            maximum: 100
+            example: 10
+          minOrder:
+            type: number
+            example: 25
+            description: Minimum Order in $AUD
+          maxDiscAmount:
+            type: number
+            example: 10
+            description: Maximum Discount Price in $AUD
+          isActive:
+            type: boolean
+            example: true
+            description: Set Voucher Code Active or Not
+          startDate:
+            type: date-time
+            example: 2021-03-16T07:00:00.000Z
+            description: Set Voucher Code Starting Date
+          endDate:
+            type: date-time
+            example: 2021-03-17T07:00:00.000Z
+            description: Set Voucher Code End Date
+          createdAt:
+            type: date-time
+            readOnly: true
+            example: 2021-03-16T08:18:26.477Z
+          updatedAt:
+            type: date-time
+            readOnly: true
+            example: 2021-03-16T08:18:26.477Z
     requestBodies:
       Venue:
         content:
