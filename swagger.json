@@ -104,6 +104,34 @@
         }
       }
     },
+    "/venueprofile/change": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "venueprofile"
+        ],
+        "summary": "Update Venue Profile Picture",
+        "description": "",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/VenueProfilePicture"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responseBodies/Venue"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      }
+    },
     "/memberprofile": {
       "get": {
         "security": [
@@ -122,6 +150,58 @@
           },
           "401": {
             "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "memberprofile"
+        ],
+        "summary": "Create New Member Profile Detail",
+        "description": "",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Member"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responseBodies/Member"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "memberprofile"
+        ],
+        "summary": "Update Member Profile Detail",
+        "description": "",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Member"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responseBodies/Member"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
           }
         }
       }
@@ -632,6 +712,37 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/venueProfile"
+            }
+          }
+        },
+        "description": "Venue Profile Parameter"
+      },
+      "VenueProfilePicture": {
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "profilePicture": {
+                  "type": "string",
+                  "format": "binary",
+                  "example": "profilePic.png",
+                  "description": "Format File Support: .jpg, .jpeg, .png"
+                }
+              }
+            },
+            "encoding": {
+              "contentType": "image/png, image/jpeg"
+            }
+          }
+        },
+        "description": "Venue Profile Parameter"
+      },
+      "Member": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/memberProfile"
             }
           }
         },
