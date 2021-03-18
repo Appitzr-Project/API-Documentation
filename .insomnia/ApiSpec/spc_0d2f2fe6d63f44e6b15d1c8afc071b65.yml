@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1616096078286
+modified: 1616096360201
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -36,6 +36,7 @@ contents: >-
       description: Reviews Detail (Access By Member and Venue)
     - name: notification
       description: Notification Detail (Access By Member)
+
   paths:
     /venueprofile:
       get:
@@ -157,8 +158,6 @@ contents: >-
             $ref: '#/components/responses/UnprocessableEntity'
     /venues:
       get:
-        security:
-          - bearerAuth: []
         tags:
           - venues
         summary: Get All Venue with Filter
@@ -174,8 +173,6 @@ contents: >-
             $ref: '#/components/responses/UnauthorizedError'
     /venues/culture:
       get:
-        security:
-          - bearerAuth: []
         tags:
           - venues
         summary: Get Option Venue Culture Category
@@ -186,8 +183,6 @@ contents: >-
             $ref: '#/components/responses/UnauthorizedError'
     /venues/{venueId}:
       get:
-        security:
-          - bearerAuth: []
         tags:
           - venues
         summary: Get Venue Detail by VenueID
@@ -294,8 +289,6 @@ contents: >-
             $ref: '#/components/responses/UnprocessableEntity'
     /products:
       get:
-        security:
-          - bearerAuth: []
         tags:
           - products
         summary: Get All Venue Products For Member
@@ -309,8 +302,6 @@ contents: >-
             $ref: '#/components/responses/UnauthorizedError'
     /products/venue:
       get:
-        security:
-          - bearerAuth: []
         tags:
           - products
         summary: Get All Venue Products
@@ -935,7 +926,4 @@ contents: >-
                   type: array
                   items:
                     $ref: "#/components/schemas/products"
-
-  security:
-    - bearerAuth: []
 contentType: yaml
