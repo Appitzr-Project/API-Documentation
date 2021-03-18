@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1615988453892
+modified: 1616051884195
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -70,6 +70,23 @@ contents: >-
             $ref: '#/components/responses/UnauthorizedError'
           "422":
             $ref: '#/components/responses/UnprocessableEntity'
+    /venueprofile/change:
+      post:
+        security:
+          - bearerAuth: []
+        tags:
+          - venueprofile
+        summary: Update Venue Profile Picture
+        description: ""
+        requestBody:
+          $ref: '#/components/requestBodies/VenueProfilePicture'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Venue'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
     /memberprofile:
       get:
         security:
@@ -83,6 +100,38 @@ contents: >-
             $ref: '#/components/responseBodies/Member'
           "401":
             $ref: '#/components/responses/UnauthorizedError'
+      post:
+        security:
+          - bearerAuth: []
+        tags:
+          - memberprofile
+        summary: Create New Member Profile Detail
+        description: ""
+        requestBody:
+          $ref: '#/components/requestBodies/Member'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Member'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
+      put:
+        security:
+          - bearerAuth: []
+        tags:
+          - memberprofile
+        summary: Update Member Profile Detail
+        description: ""
+        requestBody:
+          $ref: '#/components/requestBodies/Member'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Member'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
   components:
     securitySchemes:
       bearerAuth:
@@ -475,6 +524,26 @@ contents: >-
             schema:
               $ref: "#/components/schemas/venueProfile"
         description: Venue Profile Parameter
+      VenueProfilePicture:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                profilePicture:
+                  type: string
+                  format: binary
+                  example: profilePic.png
+                  description: "Format File Support: .jpg, .jpeg, .png"
+            encoding:
+              contentType: image/png, image/jpeg
+        description: Venue Profile Parameter
+      Member:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/memberProfile"
+        description: Venue Profile Parameter
     responseBodies:
       Venue:
         description: OK
@@ -506,6 +575,7 @@ contents: >-
                   example: success
                 data:
                   $ref: "#/components/schemas/memberProfile"
+
 
     
   security:
