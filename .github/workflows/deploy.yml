@@ -24,8 +24,8 @@ jobs:
       run: rm -rf output.yaml
     - name: Push Generator to Branch
       run: |
-        git config --global user.name "PojokanProject Push Branch Actions"
-        git config --global user.email "pojokanprojects@gmail.com"
+        git config --global user.name "${{ secrets.GIT_DEPLOY_NAME }}"
+        git config --global user.email "${{ secrets.GIT_DEPLOY_EMAIL }}"
         echo "Push New Change Swagger.json"
         git add swagger.json
         git commit -m "Update Swagger JSON"
