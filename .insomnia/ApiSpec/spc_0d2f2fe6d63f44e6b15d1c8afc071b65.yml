@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1616052760282
+modified: 1616053863425
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -21,9 +21,21 @@ contents: >-
       description: Development Server API
   tags:
     - name: venueprofile
-      description: Venue Profile API
+      description: Venue Profile Detail (Access By Venue)
     - name: memberprofile
-      description: Member Profile API
+      description: Member Profile Detail (Access By Member)
+    - name: venues
+      description: All Venue Details (Access By Member)
+    - name: products
+      description: Venue Products Details (Access By Member and Venue)
+    - name: orders
+      description: Order Details (Access By Member and Venue)
+    - name: discount
+      description: Discount Detail (Access By Venue)
+    - name: reviews
+      description: Reviews Detail (Access By Member and Venue)
+    - name: notification
+      description: Notification Detail (Access By Member)
   paths:
     /venueprofile:
       get:
@@ -592,6 +604,7 @@ contents: >-
                   example: success
                 data:
                   $ref: "#/components/schemas/memberProfile"
+
 
 
     
