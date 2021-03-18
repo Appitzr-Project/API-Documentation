@@ -263,9 +263,56 @@
           "venues"
         ],
         "summary": "Get All Venue with Filter",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sortBy",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "recent_update",
+                "favorites",
+                "populatiry"
+              ]
+            },
+            "description": "For \"populatiry\", this will show recent venue with the most trx in 7 Days"
+          }
+        ],
         "responses": {
           "200": {
             "$ref": "#/components/responseBodies/VenueAll"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/venues/{venueId}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "venues"
+        ],
+        "summary": "Get Venue Detail by VenueID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "venueId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Venue ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responseBodies/Venue"
           },
           "401": {
             "$ref": "#/components/responses/UnauthorizedError"
@@ -284,6 +331,16 @@
           "venues"
         ],
         "summary": "Get All Venue Favorites",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "isBlocked",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Show venue With Filter by isBlocked"
+          }
+        ],
         "responses": {
           "200": {
             "$ref": "#/components/responseBodies/VenueFavoriteAll"
