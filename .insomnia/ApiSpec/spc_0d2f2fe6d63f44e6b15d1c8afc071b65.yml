@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1616058087087
+modified: 1616092717187
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -162,9 +162,38 @@ contents: >-
         tags:
           - venues
         summary: Get All Venue with Filter
+        parameters:
+          - in: query
+            name: sortBy
+            schema:
+              type: string
+              enum:
+                - recent_update
+                - favorites
+                - populatiry
+            description: 'For "populatiry", this will show recent venue with the most trx in 7 Days'
         responses:
           "200":
             $ref: '#/components/responseBodies/VenueAll'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+    /venues/{venueId}:
+      get:
+        security:
+          - bearerAuth: []
+        tags:
+          - venues
+        summary: Get Venue Detail by VenueID
+        parameters:
+          - in: path
+            name: venueId
+            schema:
+              type: string
+            required: true
+            description: Venue ID
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Venue'
           "401":
             $ref: '#/components/responses/UnauthorizedError'
     /venues/favorites:
@@ -174,6 +203,12 @@ contents: >-
         tags:
           - venues
         summary: Get All Venue Favorites
+        parameters:
+          - in: query
+            name: isBlocked
+            schema:
+              type: boolean
+            description: 'Show venue With Filter by isBlocked'
         responses:
           "200":
             $ref: '#/components/responseBodies/VenueFavoriteAll'
