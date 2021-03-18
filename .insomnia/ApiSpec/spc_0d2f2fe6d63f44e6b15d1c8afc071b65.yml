@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1616093258156
+modified: 1616094936779
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -307,6 +307,52 @@ contents: >-
             $ref: '#/components/responses/UnauthorizedError'
           "422":
             $ref: '#/components/responses/UnprocessableEntity'
+    /products:
+      get:
+        security:
+          - bearerAuth: []
+        tags:
+          - products
+        summary: Get All Venue Products For Member
+        parameters:
+          - in: query
+            name: sortBy
+            schema:
+              type: string
+              enum:
+                - recent_update
+                - favorites
+                - populatiry
+            description: 'For "populatiry", this will show recent venue with the most trx in 7 Days'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/ProductsVenueMember'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+    /products/venue:
+      get:
+        security:
+          - bearerAuth: []
+        tags:
+          - products
+        summary: Get All Venue Products
+        parameters:
+          - in: query
+            name: sortBy
+            schema:
+              type: string
+              enum:
+                - recent_update
+                - favorites
+                - populatiry
+            description: 'For "populatiry", this will show recent venue with the most trx in 7 Days'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/ProductsVenue'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+
+    
   components:
     securitySchemes:
       bearerAuth:
@@ -849,6 +895,45 @@ contents: >-
                   example: success
                 data:
                   $ref: "#/components/schemas/userFavorites"
+      ProductsVenueMember:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      product:
+                        $ref: "#/components/schemas/products"
+                      venue:
+                        $ref: "#/components/schemas/venueProfile"
+      ProductsVenue:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/products"
 
   security:
     - bearerAuth: []
