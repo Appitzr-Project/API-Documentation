@@ -276,11 +276,48 @@
               ]
             },
             "description": "For \"populatiry\", this will show recent venue with the most trx in 7 Days"
+          },
+          {
+            "in": "query",
+            "name": "cultureCategory",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter Venue By Culture Category"
+          },
+          {
+            "in": "query",
+            "name": "postalCode",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Filter Venue By Postal Code"
           }
         ],
         "responses": {
           "200": {
             "$ref": "#/components/responseBodies/VenueAll"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/venues/culture": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "venues"
+        ],
+        "summary": "Get Option Venue Culture Category",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SuccessArray"
           },
           "401": {
             "$ref": "#/components/responses/UnauthorizedError"
@@ -493,6 +530,32 @@
                 "message": {
                   "type": "string",
                   "example": "success"
+                }
+              }
+            }
+          }
+        }
+      },
+      "SuccessArray": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }
