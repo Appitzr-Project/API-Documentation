@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1616057665514
+modified: 1616058087087
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -245,7 +245,7 @@ contents: >-
         summary: Delete Venue From Favorites by VenueID
         responses:
           "200":
-            $ref: '#/components/responseBodies/Success'
+            $ref: '#/components/responses/Success'
           "401":
             $ref: '#/components/responses/UnauthorizedError'
           "422":
@@ -257,6 +257,19 @@ contents: >-
         scheme: bearer
         bearerFormat: JWT
     responses:
+      Success:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
       UnauthorizedError:
         description: Authorization information is missing or invalid.
         content:
@@ -680,19 +693,6 @@ contents: >-
                   description: true = Block Venue, false = Favorite Venue
                   
     responseBodies:
-      Success:
-        description: OK
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                code:
-                  type: number
-                  example: 200
-                message:
-                  type: string
-                  example: success
       Venue:
         description: OK
         content:
