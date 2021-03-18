@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1616097537182
+modified: 1616098745162
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -185,12 +185,7 @@ contents: >-
           - venues
         summary: Get Venue Detail by VenueID
         parameters:
-          - in: path
-            name: venueId
-            schema:
-              type: string
-            required: true
-            description: Venue ID
+          - $ref: '#/components/queryParameter/venueIdFilter'
         responses:
           "200":
             $ref: '#/components/responseBodies/Venue'
@@ -237,12 +232,7 @@ contents: >-
           - venues
         summary: Update Venue Favorites or Block Venue
         parameters:
-          - in: path
-            name: venueId
-            schema:
-              type: string
-            required: true
-            description: Venue ID
+          - $ref: '#/components/queryParameter/venueIdFilter'
         responses:
           "200":
             $ref: '#/components/responseBodies/VenueFavorite'
@@ -257,12 +247,7 @@ contents: >-
           - venues
         summary: Update Venue Favorites or Block Venue by VenueID
         parameters:
-          - in: path
-            name: venueId
-            schema:
-              type: string
-            required: true
-            description: Venue ID
+          - $ref: '#/components/queryParameter/venueIdFilter'
         requestBody:
           $ref: '#/components/requestBodies/VenueFavoriteID'
         responses:
@@ -278,6 +263,8 @@ contents: >-
         tags:
           - venues
         summary: Delete Venue From Favorites by VenueID
+        parameters:
+          - $ref: '#/components/queryParameter/venueIdFilter'
         responses:
           "200":
             $ref: '#/components/responses/Success'
@@ -289,7 +276,7 @@ contents: >-
       get:
         tags:
           - products
-        summary: Get All Venue Products For Member
+        summary: Get All Venue Products (Access By Public)
         parameters:
           - $ref: '#/components/queryParameter/nameFilter'
           - $ref: '#/components/queryParameter/productsortBy'
@@ -302,7 +289,7 @@ contents: >-
       get:
         tags:
           - products
-        summary: Get Venue Product by ID For Venue
+        summary: Get Venue Product by ID (Access By Public)
         parameters:
           - $ref: '#/components/queryParameter/idFilter'
         responses:
@@ -316,7 +303,7 @@ contents: >-
           - bearerAuth: []
         tags:
           - products
-        summary: Get All Venue Products For Venue
+        summary: Get All Venue Products (Access By Venue)
         parameters:
           - $ref: '#/components/queryParameter/nameFilter'
           - $ref: '#/components/queryParameter/productsortBy'
@@ -329,13 +316,29 @@ contents: >-
         security:
           - bearerAuth: []
         tags:
-          - venues
-        summary: Add Venue Product By Venue
+          - products
+        summary: Add Product Venue (Access By Venue)
         requestBody:
-          $ref: '#/components/requestBodies/VenueFavorite'
+          $ref: '#/components/requestBodies/Product'
         responses:
           "200":
-            $ref: '#/components/responseBodies/VenueFavorite'
+            $ref: '#/components/responseBodies/ProductVenue'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
+    /products/venue/upload:
+      post:
+        security:
+          - bearerAuth: []
+        tags:
+          - products
+        summary: Upload Product Image (Access By Venue)
+        requestBody:
+          $ref: '#/components/requestBodies/UploadImage'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/UploadImage'
           "401":
             $ref: '#/components/responses/UnauthorizedError'
           "422":
@@ -346,7 +349,7 @@ contents: >-
           - bearerAuth: []
         tags:
           - products
-        summary: Get Venue Product by ID For Venue
+        summary: Get Product Venue by ID (Access By Venue)
         parameters:
           - $ref: '#/components/queryParameter/idFilter'
         responses:
@@ -359,19 +362,14 @@ contents: >-
           - bearerAuth: []
         tags:
           - products
-        summary: Update Venue Product by ID For Venue
+        summary: Update Product Venue by ID (Access By Venue)
         parameters:
-          - in: path
-            name: venueId
-            schema:
-              type: string
-            required: true
-            description: Venue ID
+          - $ref: '#/components/queryParameter/idFilter'
         requestBody:
-          $ref: '#/components/requestBodies/VenueFavoriteID'
+          $ref: '#/components/requestBodies/Product'
         responses:
           "200":
-            $ref: '#/components/responseBodies/VenueFavorite'
+            $ref: '#/components/responseBodies/ProductVenue'
           "401":
             $ref: '#/components/responses/UnauthorizedError'
           "422":
@@ -381,7 +379,9 @@ contents: >-
           - bearerAuth: []
         tags:
           - products
-        summary: Delete Venue From Product by ID For Venue
+        summary: Delete Product Venue by ID (Access By Venue)
+        parameters:
+          - $ref: '#/components/queryParameter/idFilter'
         responses:
           "200":
             $ref: '#/components/responses/Success'
@@ -810,11 +810,17 @@ contents: >-
 
     queryParameter:
       idFilter:
-        in: query
+        in: path
         name: id
         schema:
           type: string
         description: Filter by ID
+      venueIdFilter:
+        in: path
+        name: id
+        schema:
+          type: string
+        description: Filter by Venue ID
       nameFilter:
         in: query
         name: name
@@ -845,6 +851,19 @@ contents: >-
         description: 'Filter Venue By Postal Code'
         
     requestBodies:
+      UploadImage:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: string
+                  format: binary
+                  example: file.png
+                  description: "Format File Support: .jpg, .jpeg, .png"
+            encoding:
+              contentType: image/png, image/jpeg
       Venue:
         content:
           application/json:
@@ -888,8 +907,29 @@ contents: >-
                   type: boolean
                   example: false
                   description: true = Block Venue, false = Favorite Venue
-                  
+      Product:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/products"
+              
     responseBodies:
+      UploadImage:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  type: string
+                  example: https://assets.appetizr.co/2021/03/9713647c-c217-4b95-9721-51c6d7cdab92.png
       Venue:
         description: OK
         content:
