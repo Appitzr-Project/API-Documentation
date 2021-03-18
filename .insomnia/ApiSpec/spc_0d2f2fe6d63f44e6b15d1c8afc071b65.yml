@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1616092717187
+modified: 1616093258156
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -172,9 +172,31 @@ contents: >-
                 - favorites
                 - populatiry
             description: 'For "populatiry", this will show recent venue with the most trx in 7 Days'
+          - in: query
+            name: cultureCategory
+            schema:
+              type: string
+            description: 'Filter Venue By Culture Category'
+          - in: query
+            name: postalCode
+            schema:
+              type: number
+            description: 'Filter Venue By Postal Code'
         responses:
           "200":
             $ref: '#/components/responseBodies/VenueAll'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+    /venues/culture:
+      get:
+        security:
+          - bearerAuth: []
+        tags:
+          - venues
+        summary: Get Option Venue Culture Category
+        responses:
+          "200":
+            $ref: '#/components/responses/SuccessArray'
           "401":
             $ref: '#/components/responses/UnauthorizedError'
     /venues/{venueId}:
@@ -291,6 +313,7 @@ contents: >-
         type: http
         scheme: bearer
         bearerFormat: JWT
+
     responses:
       Success:
         description: OK
@@ -305,6 +328,23 @@ contents: >-
                 message:
                   type: string
                   example: success
+      SuccessArray:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  type: array
+                  items:
+                    type: string
       UnauthorizedError:
         description: Authorization information is missing or invalid.
         content:
@@ -331,6 +371,7 @@ contents: >-
                 message:
                   type: string
                   example: error
+
     schemas:
       venueProfile:
         type: object
@@ -682,6 +723,7 @@ contents: >-
             type: date-time
             readOnly: true
             example: 2021-03-16T08:18:26.477Z
+
     requestBodies:
       Venue:
         content:
