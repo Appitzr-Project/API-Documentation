@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1616057196901
+modified: 1616057665514
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -662,20 +662,23 @@ contents: >-
               $ref: "#/components/schemas/memberProfile"
         description: Venue Profile Parameter
       VenueFavorite:
+        description: Venue Favorites Parameter
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/userFavorites"
-        description: Venue Favorites Parameter
       VenueFavoriteID:
+        description: Venue Favorites ID Parameter
         content:
           application/json:
             schema:
-              isBlocked:
-                type: boolean
-                example: false
-                description: true = Block Venue, false = Favorite Venue
-        description: Venue Favorites Parameter
+              type: object
+              properties:
+                isBlocked:
+                  type: boolean
+                  example: false
+                  description: true = Block Venue, false = Favorite Venue
+                  
     responseBodies:
       Success:
         description: OK
