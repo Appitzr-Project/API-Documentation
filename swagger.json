@@ -22,11 +22,35 @@
   "tags": [
     {
       "name": "venueprofile",
-      "description": "Venue Profile API"
+      "description": "Venue Profile Detail (Access By Venue)"
     },
     {
       "name": "memberprofile",
-      "description": "Member Profile API"
+      "description": "Member Profile Detail (Access By Member)"
+    },
+    {
+      "name": "venues",
+      "description": "All Venue Details (Access By Member)"
+    },
+    {
+      "name": "products",
+      "description": "Venue Products Details (Access By Member and Venue)"
+    },
+    {
+      "name": "orders",
+      "description": "Order Details (Access By Member and Venue)"
+    },
+    {
+      "name": "discount",
+      "description": "Discount Detail (Access By Venue)"
+    },
+    {
+      "name": "reviews",
+      "description": "Reviews Detail (Access By Member and Venue)"
+    },
+    {
+      "name": "notification",
+      "description": "Notification Detail (Access By Member)"
     }
   ],
   "paths": {
@@ -41,7 +65,6 @@
           "venueprofile"
         ],
         "summary": "Detail of Venue Profile",
-        "description": "",
         "responses": {
           "200": {
             "$ref": "#/components/responseBodies/Venue"
@@ -61,7 +84,6 @@
           "venueprofile"
         ],
         "summary": "Create New Venue Profile Detail",
-        "description": "",
         "requestBody": {
           "$ref": "#/components/requestBodies/Venue"
         },
@@ -87,7 +109,6 @@
           "venueprofile"
         ],
         "summary": "Update Venue Profile Detail",
-        "description": "",
         "requestBody": {
           "$ref": "#/components/requestBodies/Venue"
         },
@@ -115,7 +136,6 @@
           "venueprofile"
         ],
         "summary": "Update Venue Profile Picture",
-        "description": "",
         "requestBody": {
           "$ref": "#/components/requestBodies/ProfilePicture"
         },
@@ -143,7 +163,6 @@
           "memberprofile"
         ],
         "summary": "Detail Member Profile",
-        "description": "",
         "responses": {
           "200": {
             "$ref": "#/components/responseBodies/Member"
@@ -217,13 +236,172 @@
           "memberprofile"
         ],
         "summary": "Update Member Profile Picture",
-        "description": "",
         "requestBody": {
           "$ref": "#/components/requestBodies/ProfilePicture"
         },
         "responses": {
           "200": {
             "$ref": "#/components/responseBodies/Member"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      }
+    },
+    "/venues": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "venues"
+        ],
+        "summary": "Get All Venue with Filter",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responseBodies/VenueAll"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/venues/favorites": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "venues"
+        ],
+        "summary": "Get All Venue Favorites",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responseBodies/VenueFavoriteAll"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "venues"
+        ],
+        "summary": "Add Venue Favorite or Block Venue",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/VenueFavorite"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responseBodies/VenueFavorite"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      }
+    },
+    "/venues/favorites/{venueId}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "venues"
+        ],
+        "summary": "Update Venue Favorites or Block Venue",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "venueId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Venue ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responseBodies/VenueFavorite"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "venues"
+        ],
+        "summary": "Update Venue Favorites or Block Venue by VenueID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "venueId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Venue ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/VenueFavoriteID"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responseBodies/VenueFavorite"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "venues"
+        ],
+        "summary": "Delete Venue From Favorites by VenueID",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success"
           },
           "401": {
             "$ref": "#/components/responses/UnauthorizedError"
@@ -244,6 +422,26 @@
       }
     },
     "responses": {
+      "Success": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "success"
+                }
+              }
+            }
+          }
+        }
+      },
       "UnauthorizedError": {
         "description": "Authorization information is missing or invalid.",
         "content": {
@@ -436,14 +634,13 @@
           },
           "venueId": {
             "type": "uuid",
-            "readOnly": true,
             "example": "9138017c-6a3b-42b8-adda-a1f1b94377e5",
             "description": "Venue ID From Table Schema venueProfile"
           },
           "isBlocked": {
             "type": "boolean",
             "example": false,
-            "description": "Blokir Venue"
+            "description": "true = Block Venue, false = Favorite Venue"
           },
           "createdAt": {
             "type": "date-time",
@@ -507,7 +704,7 @@
             "items": {
               "type": "string"
             },
-            "eample": [
+            "example": [
               "https://assets.appetizr.co/2021/03/2432ad3e-1d48-4a94-8521-966a14b42cc5.png",
               "https://assets.appetizr.co/2021/03/2e4b2ff3-6846-428f-8ef3-8ff7df22fc8f.png"
             ]
@@ -775,6 +972,33 @@
           }
         },
         "description": "Venue Profile Parameter"
+      },
+      "VenueFavorite": {
+        "description": "Venue Favorites Parameter",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/userFavorites"
+            }
+          }
+        }
+      },
+      "VenueFavoriteID": {
+        "description": "Venue Favorites ID Parameter",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "isBlocked": {
+                  "type": "boolean",
+                  "example": false,
+                  "description": "true = Block Venue, false = Favorite Venue"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "responseBodies": {
@@ -818,6 +1042,81 @@
                 },
                 "data": {
                   "$ref": "#/components/schemas/memberProfile"
+                }
+              }
+            }
+          }
+        }
+      },
+      "VenueAll": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/venueProfile"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "VenueFavoriteAll": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/userFavorites"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "VenueFavorite": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "$ref": "#/components/schemas/userFavorites"
                 }
               }
             }
