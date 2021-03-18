@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1616098745162
+modified: 1616098964490
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -23,9 +23,9 @@ contents: >-
     - name: profile
       description: Account Profile Detail (Access By Member or Venue)
     - name: venues
-      description: All Venue Details (Access By Member)
+      description: All Venue Details & Venue Favorite (Access By Public or Member)
     - name: products
-      description: Venue Products Details (Access By Member and Venue)
+      description: Venue Products Details (Access By Public and Venue)
     - name: orders
       description: Order Details (Access By Member and Venue)
     - name: discount
@@ -158,7 +158,7 @@ contents: >-
       get:
         tags:
           - venues
-        summary: Get All Venue with Filter
+        summary: Get All Venue with Filter (Access By Public)
         parameters:
           - $ref: '#/components/queryParameter/nameFilter'
           - $ref: '#/components/queryParameter/productsortBy'
@@ -173,7 +173,7 @@ contents: >-
       get:
         tags:
           - venues
-        summary: Get Option Venue Culture Category
+        summary: Get Option Venue Culture Category (Access By Public)
         responses:
           "200":
             $ref: '#/components/responses/SuccessArray'
@@ -183,7 +183,7 @@ contents: >-
       get:
         tags:
           - venues
-        summary: Get Venue Detail by VenueID
+        summary: Get Venue Detail by VenueID (Access By Public)
         parameters:
           - $ref: '#/components/queryParameter/venueIdFilter'
         responses:
@@ -197,7 +197,7 @@ contents: >-
           - bearerAuth: []
         tags:
           - venues
-        summary: Get All Venue Favorites
+        summary: Get All Venue Favorites (Access By Member)
         parameters:
           - in: query
             name: isBlocked
@@ -214,7 +214,7 @@ contents: >-
           - bearerAuth: []
         tags:
           - venues
-        summary: Add Venue Favorite or Block Venue
+        summary: Add Venue Favorite or Block Venue (Access By Member)
         requestBody:
           $ref: '#/components/requestBodies/VenueFavorite'
         responses:
@@ -230,7 +230,7 @@ contents: >-
           - bearerAuth: []
         tags:
           - venues
-        summary: Update Venue Favorites or Block Venue
+        summary: Update Venue Favorites or Block Venue (Access By Member)
         parameters:
           - $ref: '#/components/queryParameter/venueIdFilter'
         responses:
@@ -245,7 +245,7 @@ contents: >-
           - bearerAuth: []
         tags:
           - venues
-        summary: Update Venue Favorites or Block Venue by VenueID
+        summary: Update Venue Favorites or Block Venue by VenueID (Access By Member)
         parameters:
           - $ref: '#/components/queryParameter/venueIdFilter'
         requestBody:
@@ -262,7 +262,7 @@ contents: >-
           - bearerAuth: []
         tags:
           - venues
-        summary: Delete Venue From Favorites by VenueID
+        summary: Delete Venue From Favorites by VenueID (Access By Member)
         parameters:
           - $ref: '#/components/queryParameter/venueIdFilter'
         responses:
