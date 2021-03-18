@@ -117,7 +117,7 @@
         "summary": "Update Venue Profile Picture",
         "description": "",
         "requestBody": {
-          "$ref": "#/components/requestBodies/VenueProfilePicture"
+          "$ref": "#/components/requestBodies/ProfilePicture"
         },
         "responses": {
           "200": {
@@ -192,6 +192,34 @@
         "description": "",
         "requestBody": {
           "$ref": "#/components/requestBodies/Member"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responseBodies/Member"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      }
+    },
+    "/memberprofile/change": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "memberprofile"
+        ],
+        "summary": "Update Member Profile Picture",
+        "description": "",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ProfilePicture"
         },
         "responses": {
           "200": {
@@ -717,7 +745,7 @@
         },
         "description": "Venue Profile Parameter"
       },
-      "VenueProfilePicture": {
+      "ProfilePicture": {
         "content": {
           "multipart/form-data": {
             "schema": {
