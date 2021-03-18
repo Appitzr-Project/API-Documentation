@@ -1,3 +1,3 @@
 # API-Documentation
 
-Website: https://appitzr-project.github.io/API-Documentation/
+Website: https://docs.appetizr.co/
