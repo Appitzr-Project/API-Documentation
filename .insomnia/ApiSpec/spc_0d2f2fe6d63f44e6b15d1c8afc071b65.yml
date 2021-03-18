@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1616093258156
+modified: 1616098964490
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -20,14 +20,12 @@ contents: >-
     - url: https://api.dev.appetizr.co
       description: Development Server API
   tags:
-    - name: venueprofile
-      description: Venue Profile Detail (Access By Venue)
-    - name: memberprofile
-      description: Member Profile Detail (Access By Member)
+    - name: profile
+      description: Account Profile Detail (Access By Member or Venue)
     - name: venues
-      description: All Venue Details (Access By Member)
+      description: All Venue Details & Venue Favorite (Access By Public or Member)
     - name: products
-      description: Venue Products Details (Access By Member and Venue)
+      description: Venue Products Details (Access By Public and Venue)
     - name: orders
       description: Order Details (Access By Member and Venue)
     - name: discount
@@ -36,72 +34,15 @@ contents: >-
       description: Reviews Detail (Access By Member and Venue)
     - name: notification
       description: Notification Detail (Access By Member)
+
   paths:
-    /venueprofile:
+    /profile:
       get:
         security:
           - bearerAuth: []
         tags:
-          - venueprofile
-        summary: Detail of Venue Profile
-        responses:
-          "200":
-            $ref: '#/components/responseBodies/Venue'
-          "401":
-            $ref: '#/components/responses/UnauthorizedError'
-      post:
-        security:
-          - bearerAuth: []
-        tags:
-          - venueprofile
-        summary: Create New Venue Profile Detail
-        requestBody:
-          $ref: '#/components/requestBodies/Venue'
-        responses:
-          "200":
-            $ref: '#/components/responseBodies/Venue'
-          "401":
-            $ref: '#/components/responses/UnauthorizedError'
-          "422":
-            $ref: '#/components/responses/UnprocessableEntity'
-      put:
-        security:
-          - bearerAuth: []
-        tags:
-          - venueprofile
-        summary: Update Venue Profile Detail
-        requestBody:
-          $ref: '#/components/requestBodies/Venue'
-        responses:
-          "200":
-            $ref: '#/components/responseBodies/Venue'
-          "401":
-            $ref: '#/components/responses/UnauthorizedError'
-          "422":
-            $ref: '#/components/responses/UnprocessableEntity'
-    /venueprofile/change:
-      post:
-        security:
-          - bearerAuth: []
-        tags:
-          - venueprofile
-        summary: Update Venue Profile Picture
-        requestBody:
-          $ref: '#/components/requestBodies/ProfilePicture'
-        responses:
-          "200":
-            $ref: '#/components/responseBodies/Venue'
-          "401":
-            $ref: '#/components/responses/UnauthorizedError'
-          "422":
-            $ref: '#/components/responses/UnprocessableEntity'
-    /memberprofile:
-      get:
-        security:
-          - bearerAuth: []
-        tags:
-          - memberprofile
-        summary: Detail Member Profile
+          - profile
+        summary: Detail Member Profile (Access By Member)
         responses:
           "200":
             $ref: '#/components/responseBodies/Member'
@@ -111,8 +52,8 @@ contents: >-
         security:
           - bearerAuth: []
         tags:
-          - memberprofile
-        summary: Create New Member Profile Detail
+          - profile
+        summary: Create New Member Profile Detail (Access By Member)
         description: ""
         requestBody:
           $ref: '#/components/requestBodies/Member'
@@ -127,8 +68,8 @@ contents: >-
         security:
           - bearerAuth: []
         tags:
-          - memberprofile
-        summary: Update Member Profile Detail
+          - profile
+        summary: Update Member Profile Detail (Access By Member)
         description: ""
         requestBody:
           $ref: '#/components/requestBodies/Member'
@@ -139,49 +80,90 @@ contents: >-
             $ref: '#/components/responses/UnauthorizedError'
           "422":
             $ref: '#/components/responses/UnprocessableEntity'
-    /memberprofile/change:
+    /profile/change:
       post:
         security:
           - bearerAuth: []
         tags:
-          - memberprofile
-        summary: Update Member Profile Picture
+          - profile
+        summary: Update Member Profile Picture (Access By Member)
         requestBody:
           $ref: '#/components/requestBodies/ProfilePicture'
         responses:
           "200":
             $ref: '#/components/responseBodies/Member'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
+    /profile/venue:
+      get:
+        security:
+          - bearerAuth: []
+        tags:
+          - profile
+        summary: Detail of Venue Profile (Access By Venue)
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Venue'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+      post:
+        security:
+          - bearerAuth: []
+        tags:
+          - profile
+        summary: Create New Venue Profile Detail (Access By Venue)
+        requestBody:
+          $ref: '#/components/requestBodies/Venue'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Venue'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
+      put:
+        security:
+          - bearerAuth: []
+        tags:
+          - profile
+        summary: Update Venue Profile Detail (Access By Venue)
+        requestBody:
+          $ref: '#/components/requestBodies/Venue'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Venue'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
+    /profile/venue/change:
+      post:
+        security:
+          - bearerAuth: []
+        tags:
+          - profile
+        summary: Update Venue Profile Picture (Access By Venue)
+        requestBody:
+          $ref: '#/components/requestBodies/ProfilePicture'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Venue'
           "401":
             $ref: '#/components/responses/UnauthorizedError'
           "422":
             $ref: '#/components/responses/UnprocessableEntity'
     /venues:
       get:
-        security:
-          - bearerAuth: []
         tags:
           - venues
-        summary: Get All Venue with Filter
+        summary: Get All Venue with Filter (Access By Public)
         parameters:
-          - in: query
-            name: sortBy
-            schema:
-              type: string
-              enum:
-                - recent_update
-                - favorites
-                - populatiry
-            description: 'For "populatiry", this will show recent venue with the most trx in 7 Days'
-          - in: query
-            name: cultureCategory
-            schema:
-              type: string
-            description: 'Filter Venue By Culture Category'
-          - in: query
-            name: postalCode
-            schema:
-              type: number
-            description: 'Filter Venue By Postal Code'
+          - $ref: '#/components/queryParameter/nameFilter'
+          - $ref: '#/components/queryParameter/productsortBy'
+          - $ref: '#/components/queryParameter/culturCategoryFilter'
+          - $ref: '#/components/queryParameter/postalCodeFilter'
         responses:
           "200":
             $ref: '#/components/responseBodies/VenueAll'
@@ -189,11 +171,9 @@ contents: >-
             $ref: '#/components/responses/UnauthorizedError'
     /venues/culture:
       get:
-        security:
-          - bearerAuth: []
         tags:
           - venues
-        summary: Get Option Venue Culture Category
+        summary: Get Option Venue Culture Category (Access By Public)
         responses:
           "200":
             $ref: '#/components/responses/SuccessArray'
@@ -201,18 +181,11 @@ contents: >-
             $ref: '#/components/responses/UnauthorizedError'
     /venues/{venueId}:
       get:
-        security:
-          - bearerAuth: []
         tags:
           - venues
-        summary: Get Venue Detail by VenueID
+        summary: Get Venue Detail by VenueID (Access By Public)
         parameters:
-          - in: path
-            name: venueId
-            schema:
-              type: string
-            required: true
-            description: Venue ID
+          - $ref: '#/components/queryParameter/venueIdFilter'
         responses:
           "200":
             $ref: '#/components/responseBodies/Venue'
@@ -224,7 +197,7 @@ contents: >-
           - bearerAuth: []
         tags:
           - venues
-        summary: Get All Venue Favorites
+        summary: Get All Venue Favorites (Access By Member)
         parameters:
           - in: query
             name: isBlocked
@@ -241,7 +214,7 @@ contents: >-
           - bearerAuth: []
         tags:
           - venues
-        summary: Add Venue Favorite or Block Venue
+        summary: Add Venue Favorite or Block Venue (Access By Member)
         requestBody:
           $ref: '#/components/requestBodies/VenueFavorite'
         responses:
@@ -257,14 +230,9 @@ contents: >-
           - bearerAuth: []
         tags:
           - venues
-        summary: Update Venue Favorites or Block Venue
+        summary: Update Venue Favorites or Block Venue (Access By Member)
         parameters:
-          - in: path
-            name: venueId
-            schema:
-              type: string
-            required: true
-            description: Venue ID
+          - $ref: '#/components/queryParameter/venueIdFilter'
         responses:
           "200":
             $ref: '#/components/responseBodies/VenueFavorite'
@@ -277,14 +245,9 @@ contents: >-
           - bearerAuth: []
         tags:
           - venues
-        summary: Update Venue Favorites or Block Venue by VenueID
+        summary: Update Venue Favorites or Block Venue by VenueID (Access By Member)
         parameters:
-          - in: path
-            name: venueId
-            schema:
-              type: string
-            required: true
-            description: Venue ID
+          - $ref: '#/components/queryParameter/venueIdFilter'
         requestBody:
           $ref: '#/components/requestBodies/VenueFavoriteID'
         responses:
@@ -299,7 +262,9 @@ contents: >-
           - bearerAuth: []
         tags:
           - venues
-        summary: Delete Venue From Favorites by VenueID
+        summary: Delete Venue From Favorites by VenueID (Access By Member)
+        parameters:
+          - $ref: '#/components/queryParameter/venueIdFilter'
         responses:
           "200":
             $ref: '#/components/responses/Success'
@@ -307,6 +272,125 @@ contents: >-
             $ref: '#/components/responses/UnauthorizedError'
           "422":
             $ref: '#/components/responses/UnprocessableEntity'
+    /products:
+      get:
+        tags:
+          - products
+        summary: Get All Venue Products (Access By Public)
+        parameters:
+          - $ref: '#/components/queryParameter/nameFilter'
+          - $ref: '#/components/queryParameter/productsortBy'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/ProductsVenueMember'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+    /products/{id}:
+      get:
+        tags:
+          - products
+        summary: Get Venue Product by ID (Access By Public)
+        parameters:
+          - $ref: '#/components/queryParameter/idFilter'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Product'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+    /products/venue:
+      get:
+        security:
+          - bearerAuth: []
+        tags:
+          - products
+        summary: Get All Venue Products (Access By Venue)
+        parameters:
+          - $ref: '#/components/queryParameter/nameFilter'
+          - $ref: '#/components/queryParameter/productsortBy'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/ProductsVenue'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+      post:
+        security:
+          - bearerAuth: []
+        tags:
+          - products
+        summary: Add Product Venue (Access By Venue)
+        requestBody:
+          $ref: '#/components/requestBodies/Product'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/ProductVenue'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
+    /products/venue/upload:
+      post:
+        security:
+          - bearerAuth: []
+        tags:
+          - products
+        summary: Upload Product Image (Access By Venue)
+        requestBody:
+          $ref: '#/components/requestBodies/UploadImage'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/UploadImage'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
+    /products/venue/{id}:
+      get:
+        security:
+          - bearerAuth: []
+        tags:
+          - products
+        summary: Get Product Venue by ID (Access By Venue)
+        parameters:
+          - $ref: '#/components/queryParameter/idFilter'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/ProductVenue'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+      put:
+        security:
+          - bearerAuth: []
+        tags:
+          - products
+        summary: Update Product Venue by ID (Access By Venue)
+        parameters:
+          - $ref: '#/components/queryParameter/idFilter'
+        requestBody:
+          $ref: '#/components/requestBodies/Product'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/ProductVenue'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
+      delete:
+        security:
+          - bearerAuth: []
+        tags:
+          - products
+        summary: Delete Product Venue by ID (Access By Venue)
+        parameters:
+          - $ref: '#/components/queryParameter/idFilter'
+        responses:
+          "200":
+            $ref: '#/components/responses/Success'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
+
+            
   components:
     securitySchemes:
       bearerAuth:
@@ -724,7 +808,62 @@ contents: >-
             readOnly: true
             example: 2021-03-16T08:18:26.477Z
 
+    queryParameter:
+      idFilter:
+        in: path
+        name: id
+        schema:
+          type: string
+        description: Filter by ID
+      venueIdFilter:
+        in: path
+        name: id
+        schema:
+          type: string
+        description: Filter by Venue ID
+      nameFilter:
+        in: query
+        name: name
+        schema:
+          type: string
+        description: Filter by Name
+      productsortBy:
+        in: query
+        name: sortBy
+        schema:
+          type: string
+          enum:
+            - recent_update
+            - favorites
+            - populatiry
+        description: 'For "populatiry", this will show recent venue with the most trx in 7 Days'
+      culturCategoryFilter:
+        in: query
+        name: cultureCategory
+        schema:
+          type: string
+        description: 'Filter Venue By Culture Category'
+      postalCodeFilter:
+        in: query
+        name: postalCode
+        schema:
+          type: number
+        description: 'Filter Venue By Postal Code'
+        
     requestBodies:
+      UploadImage:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: string
+                  format: binary
+                  example: file.png
+                  description: "Format File Support: .jpg, .jpeg, .png"
+            encoding:
+              contentType: image/png, image/jpeg
       Venue:
         content:
           application/json:
@@ -768,8 +907,29 @@ contents: >-
                   type: boolean
                   example: false
                   description: true = Block Venue, false = Favorite Venue
-                  
+      Product:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/products"
+              
     responseBodies:
+      UploadImage:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  type: string
+                  example: https://assets.appetizr.co/2021/03/9713647c-c217-4b95-9721-51c6d7cdab92.png
       Venue:
         description: OK
         content:
@@ -849,7 +1009,78 @@ contents: >-
                   example: success
                 data:
                   $ref: "#/components/schemas/userFavorites"
-
-  security:
-    - bearerAuth: []
+      ProductsVenueMember:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      product:
+                        $ref: "#/components/schemas/products"
+                      venue:
+                        $ref: "#/components/schemas/venueProfile"
+      ProductsVenue:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/products"
+      Product:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  type: object
+                  properties:
+                    product:
+                      $ref: "#/components/schemas/products"
+                    venue:
+                      $ref: "#/components/schemas/venueProfile"
+      ProductVenue:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  $ref: "#/components/schemas/products"
 contentType: yaml
