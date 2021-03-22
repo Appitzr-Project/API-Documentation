@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1616126319436
+modified: 1616387092297
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -224,7 +224,7 @@ contents: >-
             $ref: '#/components/responses/UnauthorizedError'
           "422":
             $ref: '#/components/responses/UnprocessableEntity'
-    /venues/favorites/{venueId}:
+    /venues/favorites/{id}:
       get:
         security:
           - bearerAuth: []
@@ -232,7 +232,7 @@ contents: >-
           - venues
         summary: Update Venue Favorites or Block Venue (Access By Member)
         parameters:
-          - $ref: '#/components/queryParameter/venueIdFilter'
+          - $ref: '#/components/queryParameter/idFilter'
         responses:
           "200":
             $ref: '#/components/responseBodies/VenueFavorite'
@@ -247,7 +247,7 @@ contents: >-
           - venues
         summary: Update Venue Favorites or Block Venue by VenueID (Access By Member)
         parameters:
-          - $ref: '#/components/queryParameter/venueIdFilter'
+          - $ref: '#/components/queryParameter/idFilter'
         requestBody:
           $ref: '#/components/requestBodies/VenueFavoriteID'
         responses:
@@ -264,7 +264,7 @@ contents: >-
           - venues
         summary: Delete Venue From Favorites by VenueID (Access By Member)
         parameters:
-          - $ref: '#/components/queryParameter/venueIdFilter'
+          - $ref: '#/components/queryParameter/idFilter'
         responses:
           "200":
             $ref: '#/components/responses/Success'
@@ -389,6 +389,7 @@ contents: >-
             $ref: '#/components/responses/UnauthorizedError'
           "422":
             $ref: '#/components/responses/UnprocessableEntity'
+
 
 
             
