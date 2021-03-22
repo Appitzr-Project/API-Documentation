@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1616387092297
+modified: 1616407483120
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -389,8 +389,106 @@ contents: >-
             $ref: '#/components/responses/UnauthorizedError'
           "422":
             $ref: '#/components/responses/UnprocessableEntity'
-
-
+    /cart:
+      post:
+        security:
+          - bearerAuth: []
+        tags:
+          - orders
+        summary: Add Order to Cart (Access By Member)
+        requestBody:
+          $ref: '#/components/requestBodies/Order'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Order'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
+    /orders:
+      get:
+        security:
+          - bearerAuth: []
+        tags:
+          - orders
+        summary: Get All Order (Access By Member)
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/OrderAllMember'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+    /orders/{id}:
+      get:
+        security:
+          - bearerAuth: []
+        tags:
+          - orders
+        summary: Get Order By ID (Access By Member)
+        parameters:
+          - $ref: '#/components/queryParameter/idFilter'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/OrderIdMember'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+    /orders/venue:
+      get:
+        security:
+          - bearerAuth: []
+        tags:
+          - orders
+        summary: Get All Order (Access By Venue)
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/OrderAllVenue'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+    /orders/venue/{id}:   
+      get:
+        security:
+          - bearerAuth: []
+        tags:
+          - orders
+        summary: Get Order Venue by ID (Access By Venue)
+        parameters:
+          - $ref: '#/components/queryParameter/idFilter'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Order'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+      put:
+        security:
+          - bearerAuth: []
+        tags:
+          - orders
+        summary: Update Order Venue by ID (Access By Venue)
+        parameters:
+          - $ref: '#/components/queryParameter/idFilter'
+        requestBody:
+          $ref: '#/components/requestBodies/OrderVenue'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Order'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
+      delete:
+        security:
+          - bearerAuth: []
+        tags:
+          - orders
+        summary: Delete Order Venue by ID (Access By Venue)
+        parameters:
+          - $ref: '#/components/queryParameter/idFilter'
+        responses:
+          "200":
+            $ref: '#/components/responses/Success'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
 
             
   components:
@@ -695,7 +793,7 @@ contents: >-
           paymentDetail:
             type: string
             readOnly: true
-            example: A1B2C3D4E5F6G7H8
+            example: stripe
           transactionDate:
             type: date-time
             readOnly: true
@@ -914,7 +1012,55 @@ contents: >-
           application/json:
             schema:
               $ref: "#/components/schemas/products"
-              
+      Order:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                venueId:
+                  type: uuid
+                  example: 9138017c-6a3b-42b8-adda-a1f1b94377e5
+                  description: Venue ID From Table Schema venueProfile
+                productIds:
+                  type: array
+                  example:
+                  - 5955d7e3-3c58-4967-9cce-3b49336fa26f
+                  - b010f1c6-44ff-4980-a167-6735a4f9b9af
+                  - f2f25976-2d0c-4ec1-9d10-d5a4188541cb
+                instruction:
+                  type: string
+                  example: please add more sauce
+                discountCode:
+                  type: string
+                  example: 20OFF
+                paymentDetail:
+                  type: string
+                  example: stripe
+      OrderVenue:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - orderStatus
+              properties:
+                orderStatus:
+                  type: string
+                  example: done
+                  enum:
+                    - cancel
+                    - in_progress
+                    - done
+                paymentStatus:
+                  type: string
+                  example: payment_verified
+                  enum:
+                    - waiting_payment
+                    - payment_failed
+                    - payment_refund
+                    - payment_verified
+                    
     responseBodies:
       UploadImage:
         description: OK
@@ -1085,4 +1231,78 @@ contents: >-
                   example: success
                 data:
                   $ref: "#/components/schemas/products"
+      Order:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  $ref: "#/components/schemas/orders"
+      OrderAllMember:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      orders:
+                        $ref: "#/components/schemas/orders"
+                      venue:
+                        $ref: "#/components/schemas/venueProfile"
+      OrderAllVenue:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/orders"
+      OrderIdMember:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  type: object
+                  properties:
+                    orders:
+                      $ref: "#/components/schemas/orders"
+                    venue:
+                      $ref: "#/components/schemas/venueProfile"
 contentType: yaml
