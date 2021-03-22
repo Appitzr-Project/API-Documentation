@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1616404350409
+modified: 1616407483120
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -417,6 +417,20 @@ contents: >-
             $ref: '#/components/responseBodies/OrderAllMember'
           "401":
             $ref: '#/components/responses/UnauthorizedError'
+    /orders/{id}:
+      get:
+        security:
+          - bearerAuth: []
+        tags:
+          - orders
+        summary: Get Order By ID (Access By Member)
+        parameters:
+          - $ref: '#/components/queryParameter/idFilter'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/OrderIdMember'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
     /orders/venue:
       get:
         security:
@@ -429,8 +443,52 @@ contents: >-
             $ref: '#/components/responseBodies/OrderAllVenue'
           "401":
             $ref: '#/components/responses/UnauthorizedError'
-
-            
+    /orders/venue/{id}:   
+      get:
+        security:
+          - bearerAuth: []
+        tags:
+          - orders
+        summary: Get Order Venue by ID (Access By Venue)
+        parameters:
+          - $ref: '#/components/queryParameter/idFilter'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Order'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+      put:
+        security:
+          - bearerAuth: []
+        tags:
+          - orders
+        summary: Update Order Venue by ID (Access By Venue)
+        parameters:
+          - $ref: '#/components/queryParameter/idFilter'
+        requestBody:
+          $ref: '#/components/requestBodies/OrderVenue'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Order'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
+      delete:
+        security:
+          - bearerAuth: []
+        tags:
+          - orders
+        summary: Delete Order Venue by ID (Access By Venue)
+        parameters:
+          - $ref: '#/components/queryParameter/idFilter'
+        responses:
+          "200":
+            $ref: '#/components/responses/Success'
+          "401":
+            $ref: '#/components/responses/UnauthorizedError'
+          "422":
+            $ref: '#/components/responses/UnprocessableEntity'
 
             
   components:
@@ -735,7 +793,7 @@ contents: >-
           paymentDetail:
             type: string
             readOnly: true
-            example: A1B2C3D4E5F6G7H8
+            example: stripe
           transactionDate:
             type: date-time
             readOnly: true
@@ -979,8 +1037,30 @@ contents: >-
                 paymentDetail:
                   type: string
                   example: stripe
-              
-              
+      OrderVenue:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - orderStatus
+              properties:
+                orderStatus:
+                  type: string
+                  example: done
+                  enum:
+                    - cancel
+                    - in_progress
+                    - done
+                paymentStatus:
+                  type: string
+                  example: payment_verified
+                  enum:
+                    - waiting_payment
+                    - payment_failed
+                    - payment_refund
+                    - payment_verified
+                    
     responseBodies:
       UploadImage:
         description: OK
@@ -1205,4 +1285,24 @@ contents: >-
                   type: array
                   items:
                     $ref: "#/components/schemas/orders"
+      OrderIdMember:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  type: object
+                  properties:
+                    orders:
+                      $ref: "#/components/schemas/orders"
+                    venue:
+                      $ref: "#/components/schemas/venueProfile"
 contentType: yaml
