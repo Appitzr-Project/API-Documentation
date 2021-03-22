@@ -371,7 +371,7 @@
         }
       }
     },
-    "/venues/favorites/{venueId}": {
+    "/venues/favorites/{id}": {
       "get": {
         "security": [
           {
@@ -384,7 +384,7 @@
         "summary": "Update Venue Favorites or Block Venue (Access By Member)",
         "parameters": [
           {
-            "$ref": "#/components/queryParameter/venueIdFilter"
+            "$ref": "#/components/queryParameter/idFilter"
           }
         ],
         "responses": {
@@ -411,7 +411,7 @@
         "summary": "Update Venue Favorites or Block Venue by VenueID (Access By Member)",
         "parameters": [
           {
-            "$ref": "#/components/queryParameter/venueIdFilter"
+            "$ref": "#/components/queryParameter/idFilter"
           }
         ],
         "requestBody": {
@@ -441,7 +441,7 @@
         "summary": "Delete Venue From Favorites by VenueID (Access By Member)",
         "parameters": [
           {
-            "$ref": "#/components/queryParameter/venueIdFilter"
+            "$ref": "#/components/queryParameter/idFilter"
           }
         ],
         "responses": {
