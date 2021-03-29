@@ -462,8 +462,11 @@
         "tags": [
           "products"
         ],
-        "summary": "Get All Venue Products (Access By Public)",
+        "summary": "Get All Venue Products with Filter by VenueId (Access By Public)",
         "parameters": [
+          {
+            "$ref": "#/components/queryParameter/venueIdFilter"
+          },
           {
             "$ref": "#/components/queryParameter/nameFilter"
           },
