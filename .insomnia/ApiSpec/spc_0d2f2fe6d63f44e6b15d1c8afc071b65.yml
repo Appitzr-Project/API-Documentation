@@ -1003,19 +1003,19 @@ contents: >-
               contentType: image/png, image/jpeg
         description: Venue Profile Parameter
       BannerPicture:
-      content:
-        multipart/form-data:
-          schema:
-            type: object
-            properties:
-              bannerPicture:
-                type: string
-                format: binary
-                example: bannerPic.png
-                description: "Format File Support: .jpg, .jpeg, .png"
-          encoding:
-            contentType: image/png, image/jpeg
-      description: Venue Profile Parameter
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                bannerPicture:
+                  type: string
+                  format: binary
+                  example: bannerPic.png
+                  description: "Format File Support: .jpg, .jpeg, .png"
+            encoding:
+              contentType: image/png, image/jpeg
+        description: Venue Profile Parameter
       Member:
         content:
           application/json:
