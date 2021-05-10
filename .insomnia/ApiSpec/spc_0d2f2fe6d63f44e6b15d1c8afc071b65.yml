@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1617021401389
+modified: 1620672427813
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -19,6 +19,8 @@ contents: >-
       description: Production Server API
     - url: https://api.dev.appetizr.co
       description: Development Server API
+    - url: http://localhost:3000/dev
+      description: Local Development Server API    
   tags:
     - name: profile
       description: Account Profile Detail (Access By Member or Venue)
@@ -165,7 +167,7 @@ contents: >-
           $ref: '#/components/requestBodies/BannerPicture'
         responses:
           "200":
-            $ref: '#/components/responses/Success'
+            $ref: '#/components/responseBodies/Venue'
           "401":
             $ref: '#/components/responses/UnauthorizedError'
           "422":
@@ -508,6 +510,7 @@ contents: >-
             $ref: '#/components/responses/UnprocessableEntity'
 
 
+
             
   components:
     securitySchemes:
@@ -633,6 +636,10 @@ contents: >-
               - european
               - americas
           profilePicture:
+            type: string
+            readOnly: true
+            example: https://assets.appetizr.co/2021/03/373cf69e-23f2-430a-acc3-7234800edaf0.png
+          banner:
             type: string
             readOnly: true
             example: https://assets.appetizr.co/2021/03/373cf69e-23f2-430a-acc3-7234800edaf0.png
@@ -1008,14 +1015,14 @@ contents: >-
             schema:
               type: object
               properties:
-                bannerPicture:
+                banner:
                   type: string
                   format: binary
                   example: bannerPic.png
                   description: "Format File Support: .jpg, .jpeg, .png"
             encoding:
               contentType: image/png, image/jpeg
-        description: Venue Profile Parameter
+        description: Venue bBnner Parameter
       Member:
         content:
           application/json:
