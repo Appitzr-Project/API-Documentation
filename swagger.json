@@ -17,6 +17,10 @@
     {
       "url": "https://api.dev.appetizr.co",
       "description": "Development Server API"
+    },
+    {
+      "url": "http://localhost:3000/dev",
+      "description": "Local Development Server API"
     }
   ],
   "tags": [
@@ -234,6 +238,33 @@
         "summary": "Update Venue Profile Picture (Access By Venue)",
         "requestBody": {
           "$ref": "#/components/requestBodies/ProfilePicture"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responseBodies/Venue"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      }
+    },
+    "/profile/venue/banner": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "profile"
+        ],
+        "summary": "Update Venue Banner Picture (Access By Venue)",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/BannerPicture"
         },
         "responses": {
           "200": {
@@ -1021,6 +1052,11 @@
             "readOnly": true,
             "example": "https://assets.appetizr.co/2021/03/373cf69e-23f2-430a-acc3-7234800edaf0.png"
           },
+          "banner": {
+            "type": "string",
+            "readOnly": true,
+            "example": "https://assets.appetizr.co/2021/03/373cf69e-23f2-430a-acc3-7234800edaf0.png"
+          },
           "createdAt": {
             "type": "date-time",
             "readOnly": true,
@@ -1498,6 +1534,27 @@
           }
         },
         "description": "Venue Profile Parameter"
+      },
+      "BannerPicture": {
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "banner": {
+                  "type": "string",
+                  "format": "binary",
+                  "example": "bannerPic.png",
+                  "description": "Format File Support: .jpg, .jpeg, .png"
+                }
+              }
+            },
+            "encoding": {
+              "contentType": "image/png, image/jpeg"
+            }
+          }
+        },
+        "description": "Venue Banner Parameter"
       },
       "Member": {
         "content": {
