@@ -1,7 +1,7 @@
 _id: spc_0d2f2fe6d63f44e6b15d1c8afc071b65
 type: ApiSpec
 parentId: wrk_a14d3233ec9e4a5a8512f084572b8c01
-modified: 1620672600588
+modified: 1623379515370
 created: 1615646672691
 fileName: appetzr
 contents: >-
@@ -242,18 +242,25 @@ contents: >-
             $ref: '#/components/responses/UnauthorizedError'
           "422":
             $ref: '#/components/responses/UnprocessableEntity'
-    /venues/favorites/{id}:
+    /venues/favorites/{venueId}:
       get:
         security:
           - bearerAuth: []
         tags:
           - venues
         summary: Update Venue Favorites or Block Venue (Access By Member)
-        parameters:
-          - $ref: '#/components/queryParameter/idFilter'
         responses:
           "200":
-            $ref: '#/components/responseBodies/VenueFavorite'
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    venue:
+                      $ref: '#/components/requestBodies/VenueFavorite'
+                    venueFavorites:
+                      type: boolean
+                      example: true
           "401":
             $ref: '#/components/responses/UnauthorizedError'
           "422":
@@ -264,8 +271,6 @@ contents: >-
         tags:
           - venues
         summary: Update Venue Favorites or Block Venue by VenueID (Access By Member)
-        parameters:
-          - $ref: '#/components/queryParameter/idFilter'
         requestBody:
           $ref: '#/components/requestBodies/VenueFavoriteID'
         responses:
@@ -281,8 +286,6 @@ contents: >-
         tags:
           - venues
         summary: Delete Venue From Favorites by VenueID (Access By Member)
-        parameters:
-          - $ref: '#/components/queryParameter/idFilter'
         responses:
           "200":
             $ref: '#/components/responses/Success'
@@ -304,6 +307,16 @@ contents: >-
             $ref: '#/components/responseBodies/ProductsVenueMember'
           "401":
             $ref: '#/components/responses/UnauthorizedError'
+    /products/categories/{categories}:
+      get:
+        tags:
+          - products
+        summary: Get All Product Categories (Access By Public)
+        parameters:
+          - $ref: '#/components/queryParameter/categoiresFilter'
+        responses:
+          "200":
+            $ref: '#/components/responseBodies/Categories'
     /products/{id}:
       get:
         tags:
@@ -508,6 +521,7 @@ contents: >-
             $ref: '#/components/responses/UnauthorizedError'
           "422":
             $ref: '#/components/responses/UnprocessableEntity'
+
 
 
 
@@ -932,6 +946,21 @@ contents: >-
             type: date-time
             readOnly: true
             example: 2021-03-16T08:18:26.477Z
+      categories:
+        type: object
+        properties:
+          name:
+            type: string
+            example: Entree
+          slug:
+            type: string
+            example: entree
+          type:
+            type: string
+            example: ProductCategory
+            enum:
+              - ProductCategory
+              - CultureCategory
 
     queryParameter:
       idFilter:
@@ -974,7 +1003,16 @@ contents: >-
         schema:
           type: number
         description: 'Filter Venue By Postal Code'
-        
+      categoiresFilter:
+        in: path
+        name: categories
+        scheme:
+          type: string
+          enum:
+            - ProductCategory
+            - CultureCategory
+        description: Filter Categories
+
     requestBodies:
       UploadImage:
         content:
@@ -1344,4 +1382,21 @@ contents: >-
                       $ref: "#/components/schemas/orders"
                     venue:
                       $ref: "#/components/schemas/venueProfile"
+      Categories:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: number
+                  example: 200
+                message:
+                  type: string
+                  example: success
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/categories"
 contentType: yaml
