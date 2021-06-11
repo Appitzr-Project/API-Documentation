@@ -402,7 +402,7 @@
         }
       }
     },
-    "/venues/favorites/{id}": {
+    "/venues/favorites/{venueId}": {
       "get": {
         "security": [
           {
@@ -413,14 +413,24 @@
           "venues"
         ],
         "summary": "Update Venue Favorites or Block Venue (Access By Member)",
-        "parameters": [
-          {
-            "$ref": "#/components/queryParameter/idFilter"
-          }
-        ],
         "responses": {
           "200": {
-            "$ref": "#/components/responseBodies/VenueFavorite"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "venue": {
+                      "$ref": "#/components/requestBodies/VenueFavorite"
+                    },
+                    "venueFavorites": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/UnauthorizedError"
@@ -440,11 +450,6 @@
           "venues"
         ],
         "summary": "Update Venue Favorites or Block Venue by VenueID (Access By Member)",
-        "parameters": [
-          {
-            "$ref": "#/components/queryParameter/idFilter"
-          }
-        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/VenueFavoriteID"
         },
@@ -470,11 +475,6 @@
           "venues"
         ],
         "summary": "Delete Venue From Favorites by VenueID (Access By Member)",
-        "parameters": [
-          {
-            "$ref": "#/components/queryParameter/idFilter"
-          }
-        ],
         "responses": {
           "200": {
             "$ref": "#/components/responses/Success"
@@ -511,6 +511,24 @@
           },
           "401": {
             "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/products/categories/{categories}": {
+      "get": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Get All Product Categories (Access By Public)",
+        "parameters": [
+          {
+            "$ref": "#/components/queryParameter/categoiresFilter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responseBodies/Categories"
           }
         }
       }
@@ -1426,6 +1444,27 @@
             "example": "2021-03-16T08:18:26.477Z"
           }
         }
+      },
+      "categories": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Entree"
+          },
+          "slug": {
+            "type": "string",
+            "example": "entree"
+          },
+          "type": {
+            "type": "string",
+            "example": "ProductCategory",
+            "enum": [
+              "ProductCategory",
+              "CultureCategory"
+            ]
+          }
+        }
       }
     },
     "queryParameter": {
@@ -1481,6 +1520,18 @@
           "type": "number"
         },
         "description": "Filter Venue By Postal Code"
+      },
+      "categoiresFilter": {
+        "in": "path",
+        "name": "categories",
+        "scheme": {
+          "type": "string",
+          "enum": [
+            "ProductCategory",
+            "CultureCategory"
+          ]
+        },
+        "description": "Filter Categories"
       }
     },
     "requestBodies": {
@@ -2039,6 +2090,32 @@
                     "venue": {
                       "$ref": "#/components/schemas/venueProfile"
                     }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Categories": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/categories"
                   }
                 }
               }
